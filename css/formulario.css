@@ -1,0 +1,100 @@
+label .pista{
+  display: block;
+  color: var(--color-contraste-suave);
+  font-size: 0.9em;
+  font-style: italic;
+}
+label, input, button{
+  font-weight: 400;
+  font-size: 0.9em;
+  font-family: inherit;
+}
+label, input{
+  color: inherit;
+  background-color: inherit;
+  transition-duration: var(--transicion-corta);
+}
+input{
+  padding: 0.5em;
+  border: 2px solid transparent;
+  border-bottom: 2px solid var(--color-contraste-suave);
+  box-shadow: none;
+  outline: none;
+  transition-property: border;
+}
+input::placeholder{
+  color: var(--color-contraste-suave);
+}
+input:focus{
+  border: 2px solid var(--color-contraste);
+  color: var(--color-contraste);
+}
+
+input.invalido{
+  border: 2px solid var(--color-peligro-apagado)
+}
+
+input.invalido:focus{
+  border: 2px solid var(--color-peligro);
+}
+button{
+  border-radius: 0;
+  border: 2px solid var(--color-contraste);
+  padding: calc(0.5em - 2px) calc(1em - 2px);
+  color: inherit;
+  outline: none;
+  background-color: inherit;
+  cursor: pointer;
+  transition-property: color, background-color, box-shadow;
+  transition-duration: var(--transicion-corta);
+}
+button:hover:not(:disabled), button:focus{
+  box-shadow: 0 0 10em rgba(0, 0, 0, 0.3) inset;
+}
+button:active:not(:disabled){
+  box-shadow: 0 0 10em rgba(0, 0, 0, 0.5) inset;
+}
+
+button.peligro, button.exito, button:disabled{
+  border:none;
+}
+
+button.peligro, button.exito{
+  padding: 0.5em 1em;
+}
+button.peligro{
+  background-color: var(--color-peligro);
+}
+button.exito{
+  background-color: var(--color-exito);
+}
+button:disabled{
+  background-color: var(--color-contraste-suave);
+  color: var(--color-normal-suave);
+}
+
+.modal{
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.modal > .dialogo{
+  display: flex;
+  max-width: 400px;
+  padding: 1em 1.5em;
+  margin: 0 auto;
+  background: var(--color-normal-suave);
+  position:relative;
+  flex-flow: column;
+  top: 50%;
+  transform:translateY(-50%);
+}
+
+.dialogo > div{
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
