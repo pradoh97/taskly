@@ -31,18 +31,14 @@ header{
   align-items: center;
   background-color:inherit;
   justify-content: space-between;
-}
-header, main{
   flex-flow: row wrap;
-  padding: 1em 2em;
   display: flex;
 }
-main section:last-of-type{
-  flex-grow: 1;
+header, main{
+  padding: 1em 2em;
 }
 main{
   background-color: var(--color-normal-suave);
-  justify-content: center;
 }
 main h1{
   margin-bottom: 0.5em;

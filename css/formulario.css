@@ -1,3 +1,6 @@
+.modal label{
+  margin-bottom: 1em;
+}
 label .pista{
   display: block;
   color: var(--color-contraste-suave);
