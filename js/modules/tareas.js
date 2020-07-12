@@ -1,41 +1,51 @@
-function crearTarea(titulo){
-  let atributoTarea;
-
-  let tarea = {
-    descripcion:'Añadí una descripción de la tarea.'
+class Tarea {
+  constructor(titulo, descripcion, id, estado) {
+    this.titulo = titulo;
+    this.descripcion;
+    this.id;
+    this.estado;
+    this.nodo;
   }
-  tarea.titulo = titulo;
-  tarea.nodo = document.createElement('div');
-  tarea.nodo.classList.add('tarea');
-  tarea.nodo.innerHTML = `
 
-  <div class="titulo">
-    <h2 class="campo-editable">${titulo}</h2><i class="fas fa-pen"></i>
-  </div>
-  <div class="descripcion">
+  crearTarea(){
+    let atributoTarea;
+
+    if(!this.descripcion){
+      this.descripcion = 'Añadí una descripción de la tarea.';
+    }
+    if(!this.estado){
+      this.estado = 'incompleta';
+    }
+    this.nodo = document.createElement('div');
+    this.nodo.classList.add('tarea');
+    this.id = obtenerUltimaTarea() + 1;
+
+    this.nodo.innerHTML = `
+
+    <div class="titulo">
+    <h2 class="campo-editable">${this.titulo}</h2><i class="fas fa-pen"></i>
+    </div>
+    <div class="descripcion">
     <p class="campo-editable">
-      ${tarea.descripcion}
+    ${this.descripcion}
     </p>
     <i class="fas fa-pen"></i>
-  </div>
+    </div>
 
-  <button class="exito" type="button">
+    <button class="exito" type="button">
     <i class="fas fa-check"></i> Marcar como completa.
-  </button>`;
+    </button>`;
+    atributoTarea = document.createAttribute('data-id-tarea');
+    atributoTarea.value = this.id;
 
-  tarea.nodo.querySelectorAll('.campo-editable').forEach(campo => campo.addEventListener('click', generarModal));
+    this.nodo.setAttributeNode(atributoTarea);
+    grillaTareas.appendChild(this.nodo);
 
-  tarea.id = obtenerUltimaTarea() + 1;
+    guardarLocalStorage('tarea-' + this.id, this);
 
-  atributoTarea = document.createAttribute('data-id-tarea');
-  atributoTarea.value = tarea.id;
+    contarTareas();
+  }
 
-  tarea.nodo.setAttributeNode(atributoTarea);
-  grillaTareas.appendChild(tarea.nodo);
-
-  agregarTareaLS(tarea);
-
-  contarTareas();
 }
 
 function contarTareas(){
@@ -55,34 +65,3 @@ function contarTareas(){
 
   contadorTareas.innerText = mensaje;
 }
-
-function agregarTareaLS(tarea){
-  let claveLS = 'tarea-' + tarea.id;
-  delete tarea.nodo;
-  localStorage.setItem(claveLS, JSON.stringify(tarea));
-}
-
-function obtenerClaveTareaLS(claveLS){
-  let idTarea;
-  idTarea = localStorage.getItem(claveLS);
-  idTarea = JSON.parse(idTarea);
-  idTarea = idTarea.id;
-  return idTarea;
-}
-
-function obtenerUltimaTarea(){
-  let id = 0, regExp = /tarea/, claveLS, valorClaveLS;
-
-  for(let i = 0; i<localStorage.length; i++){
-    claveLS = localStorage.key(i);
-
-    if(regExp.test(claveLS)){
-      valorClaveLS = obtenerClaveTareaLS(claveLS);
-    }
-    if(valorClaveLS && valorClaveLS > id){
-      id = valorClaveLS;
-    }
-  }
-  return id;
-}
-// TODO: Agregar las tareas desde localStorage al DOM

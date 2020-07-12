@@ -1,3 +1,6 @@
+.modal label{
+  margin-bottom: 1em;
+}
 label .pista{
   display: block;
   color: var(--color-contraste-suave);
@@ -71,6 +74,7 @@ button.exito{
 button:disabled{
   background-color: var(--color-contraste-suave);
   color: var(--color-normal-suave);
+  cursor: not-allowed;
 }
 
 .modal{

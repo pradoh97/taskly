@@ -7,53 +7,24 @@
     <link rel="stylesheet" href="css/formulario.css">
     <link rel="stylesheet" href="css/app.css">
     <title>Taskly</title>
-    <script type="text/javascript" src="js/app.js" async></script>
-    <script src="https://kit.fontawesome.com/e465e8285d.js" crossorigin="anonymous" async></script>
+    <script type="text/javascript" src="js/modules/localStorage.js" defer></script>
+    <script type="text/javascript" src="js/modules/modal.js" defer></script>
+    <script type="text/javascript" src="js/modules/tareas.js" defer></script>
+    <script type="text/javascript" src="js/app.js" defer></script>
+    <script src="https://kit.fontawesome.com/e465e8285d.js" crossorigin="anonymous" defer></script>
   </head>
   <body>
     <header>
       <h1>Taskly</h1>
-      <p id="pendientes">Tenés <em></em>, <span data-nombre-usuario="placeholder name" class="campo-editable">tu nombre podría estar acá :(</span><i class="fas fa-pen"></i></p>
+      <p id="pendientes">Tenés <em></em>, <span id="nombre-usuario" class="campo-editable">tu nombre podría estar acá :(</span>.<i class="fas fa-pen"></i></p>
     </header>
     <main>
-      <section class="carga">
-        <h1>Cargar tarea nueva</h1>
-        <div class="tarea">
-          <div class="campo">
-            <label for="titulo-tarea">
-              Titulo de la tarea
-              <em class="pista">Intentá que sea un nombre corto y representativo.</em>
-            </label>
-            <input id="titulo-tarea" type="text" required placeholder="Lavar los platos">
-          </div>
-
-          <div class="campo">
-            <label for="descripcion-tarea">Descripción de la tarea
-            <em class="pista">Explayate y contá sobre la tarea.</em></label>
-            <input id="descripcion-tarea" type="text" required placeholder="Usar detergente y esponja">
-          </div>
-
-          <!--
-
-          Selector de fecha accesible
-          https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html
-
-          <label for="termino-tarea">Término de la tarea</label>
-          <input id="termino-tarea" type="text" required placeholder="dd/mm/aa">
-          <button type="button"></button>
-
-          -->
-
-          <button disabled type="button">
-            <i class="fas fa-plus"></i> Agregar tarea
-          </button>
-        </div>
-      </section>
-
       <section>
         <h1>Tareas <span id="contador-tareas"></span></h1>
         <div class="grilla-tareas">
-
+          <button id="agregar-tarea" class="tarea-placeholder">
+            <i class="fas fa-plus"></i> Agregar tarea
+          </button>
           <!--<div class="tarea">
             <div class="titulo">
               <h2 class="campo-editable">Estudiar</h2><i class="fas fa-pen"></i>
@@ -76,7 +47,6 @@
             </button>
           </div>
           -->
-        </div>
       </section>
 
     </main>

@@ -1,157 +1,129 @@
 class Modal {
   constructor(e) {
-    this.mensaje;
-    this.valorPropietario;
-    this.nombreAtributoPropietario;
-    this.tipo;
-    this.origen = e;
-    this.cuerpo;
+    this.llamador = e.target;
+    this.textoEntrada = "";
+    this.etiqueta;
+    this.pista;
+    this.input;
     this.nodo;
   }
 
-  definirPropietario(){
-    if(this.origen.target.nodeName.toLowerCase() != 'button'){
-      let atributos = Array.from(this.origen.target.attributes);
-      let propietario = this.verificarData(atributos);
-      this.nombreAtributoPropietario = propietario.name;
-      this.valorPropietario = propietario.value;
-    }
+  obtenerValorActual(){
+    return this.input.value;
+  }
+  obtenerIDLlamador(){
+    return this.llamador.id;
+  }
+  esNombreUsuario(){
+    return this.obtenerIDLlamador().includes('nombre');
+  }
+
+  nombreUsuarioEstablecido(){
+    return localStorage.getItem(this.obtenerIDLlamador());
   }
 
   definirMensaje(){
-    if(this.nombreAtributoPropietario == 'data-nombre-usuario'){
-      this.mensaje = 'tu nombre.'
-      this.tipo = 'nombre';
-      this.valorPropietario = nombre.innerText;
-    }
-    if(!this.nombreAtributoPropietario || !this.valorPropietario){
-      this.mensaje = 'el título de la tarea.';
-      this.tipo = 'titulo';
-    }
-  }
+    if(this.esNombreUsuario()){
+      this.etiqueta = 'tu nombre.'
+      this.pista = 'El que mejor te represente :)';
 
-  verificarData(atributos){
-    let propietario = "";
-    let nombreUsuario = /nombre-usuario/, tarea = /id-tarea/;
-
-    if(this.origen.target == botonAgregarTarea){
-      propietario = botonAgregarTarea;
-    } else{
-      atributos.forEach(attr => {
-        let regExp = /data/;
-        if(regExp.test(attr.name)){
-          propietario = attr;
-        }
-      });
+      if(this.nombreUsuarioEstablecido()){
+        this.textoEntrada = this.llamador.innerText;
+      }
     }
-    return propietario;
+    else{
+      this.etiqueta = 'el título de la tarea.';
+      this.pista = 'Tratá que sea corto y representativo';
+    }
   }
 
   mostrarModal(){
-    let modal = document.createElement('div');
-    modal.classList.add('modal');
-    modal.innerHTML = this.crearCuerpo(this.nombreAtributoPropietario, this.valorPropietario);
-    this.nodo = modal;
+    this.nodo = document.createElement('div');
 
+    this.nodo.classList.add('modal');
+    this.nodo.innerHTML = this.crearCuerpo();
     this.agregarListeners();
-    document.body.insertBefore(modal, document.body.firstChild);
-    
+
+    document.body.insertBefore(this.nodo, document.body.firstChild);
     this.nodo.querySelector('input').select();
   }
 
-  crearCuerpo(atributo='', valor=''){
+  crearCuerpo(textoEntrada = ""){
+    let cuerpoModal;
 
-    let cuerpoModal, mensajePista, textoInput='';
-    if(this.origen.target != botonAgregarTarea){
-      textoInput = this.origen.target.innerText;
-    }
-    if(atributo && valor){
-      cuerpoModal = `<div ${atributo} = "${valor}" class="dialogo">`;
-    } else {
-      cuerpoModal = `<div class="dialogo">`;
-    }
-    if(this.tipo == 'nombre'){
-      mensajePista = 'El que mejor te represente :)';
-    } else if(this.tipo == 'titulo'){
-      mensajePista = 'Tratá que sea corto y representativo';
-    } else if(this.tipo == 'descripcion'){
-      mensajePista = 'Acá si, explayate y contá de qué se trata.'
-    }
-
-    cuerpoModal += `
-    <label for="dato">Introducí <span>${this.mensaje}</span>
-    <em class="pista">${mensajePista}</em></label>
-    <input id="dato" modatype="text" value="${textoInput}">
-    <div class="controles">
-    <button disabled class="exito" role="boton guardar cambio" type="button" id="guardar-modal" name="button"><i class="fas fa-save"></i> Guardar</button>
-    <button type="button" role="boton descartar cambio" name="button"><i class="fas fa-trash"></i> Descartar</button>
-    </div>
+    cuerpoModal = `
+    <div class="dialogo">
+      <label for="dato">
+        Introducí <span>${this.etiqueta}</span>
+        <em class="pista">${this.pista}</em>
+      </label>
+      <input id="dato" modatype="text" value="${this.textoEntrada}">
+      <div class="controles">
+        <button disabled class="exito" role="boton guardar cambio" type="button" id="guardar-modal" name="button"><i class="fas fa-save"></i> Guardar</button>
+        <button type="button" role="boton descartar cambio" name="button"><i class="fas fa-trash"></i> Descartar</button>
+      </div>
     </div>`;
+
     return cuerpoModal;
   }
 
   agregarListeners(){
+    this.input = this.nodo.querySelector('input');
     this.nodo.addEventListener('keyup', guardarCambiosModal);
     this.nodo.addEventListener('keyup', eliminarModal);
     this.nodo.addEventListener('click', eliminarModal);
     this.nodo.querySelector('[role="boton descartar cambio"]').addEventListener('click', eliminarModal);
-    this.nodo.querySelector('input').addEventListener('input', alternarGuardado);
+    this.input.addEventListener('input', alternarGuardado);
     this.nodo.querySelector('[role="boton guardar cambio"]').addEventListener('click', guardarCambiosModal);
   }
-  guardarCambios(valor){
-    if(this.origen.target != botonAgregarTarea){
-      this.origen.target.innerText = valor;
+
+  guardarCambiosDOM(){
+    if(this.esNombreUsuario()){
+      this.llamador.innerText = this.obtenerValorActual();
     } else {
-      crearTarea(valor);
+      let tarea = new Tarea(this.obtenerValorActual());
+      tarea.crearTarea();
+      //tarea.mostrarTarea();
     }
   }
 }
 
 function generarModal(e){
   modal = new Modal(e);
-
-  modal.definirPropietario();
   modal.definirMensaje();
   modal.mostrarModal();
 }
 
-function buscarModal(){
-
-  if(document.querySelector('.modal')){
-    return document.querySelector('.modal');
-  }
-}
-
 function guardarCambiosModal(e){
-  let input = buscarModal().querySelector('input');
+
   if(e.keyCode == 13 || e.which == 13 || e.target.nodeName.toLowerCase() == 'button'){
-    if(!input.value || input.value == ""){
+
+    if(!modal.obtenerValorActual() || modal.obtenerValorActual() == ""){
       return;
     }
-    modal.guardarCambios(buscarModal().querySelector('input').value);
+
+    if(modal.esNombreUsuario()){
+      guardarLocalStorage(modal.obtenerIDLlamador(), modal.obtenerValorActual())
+    }
+
+    modal.guardarCambiosDOM();
     eliminarModal(0);
   }
 }
 
 function eliminarModal(e){
-  let botonDescarte = document.querySelector('[role="boton descartar cambio"]');
-  if(e==0){
-    buscarModal().remove();
+
+  if(e === 0 || e.target.classList.contains('modal') || e.keyCode == 27 || e.which == 27
+    || e.target == modal.nodo.querySelector('[role="boton descartar cambio"]')){
+    modal.nodo.remove();
     return;
-  }
-  if(e.target.classList.contains('modal')){
-    buscarModal().remove();
-    return;
-  }
-  else if(e.keyCode == 27 || e.which == 27 || e.target == botonDescarte){
-    buscarModal().remove();
   }
 }
 
 function alternarGuardado(e){
-  if(e.target.value && e.target.value != ""){
-    buscarModal().querySelector('[role="boton guardar cambio"]').disabled = false;
+  if(modal.obtenerValorActual() && modal.obtenerValorActual() != ""){
+    modal.nodo.querySelector('[role="boton guardar cambio"]').disabled = false;
   } else {
-    buscarModal().querySelector('[role="boton guardar cambio"]').disabled = true;
+    modal.nodo.querySelector('[role="boton guardar cambio"]').disabled = true;
   }
 }
