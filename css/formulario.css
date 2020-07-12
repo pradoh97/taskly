@@ -74,6 +74,7 @@ button.exito{
 button:disabled{
   background-color: var(--color-contraste-suave);
   color: var(--color-normal-suave);
+  cursor: not-allowed;
 }
 
 .modal{
