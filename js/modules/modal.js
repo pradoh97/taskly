@@ -55,14 +55,16 @@ class Modal {
 
     this.agregarListeners();
     document.body.insertBefore(modal, document.body.firstChild);
-
-    this.nodo.querySelector('input').focus();
+    
+    this.nodo.querySelector('input').select();
   }
 
-  crearCuerpo(atributo="", valor=""){
+  crearCuerpo(atributo='', valor=''){
 
-    let cuerpoModal, mensajePista;
-
+    let cuerpoModal, mensajePista, textoInput='';
+    if(this.origen.target != botonAgregarTarea){
+      textoInput = this.origen.target.innerText;
+    }
     if(atributo && valor){
       cuerpoModal = `<div ${atributo} = "${valor}" class="dialogo">`;
     } else {
@@ -79,7 +81,7 @@ class Modal {
     cuerpoModal += `
     <label for="dato">Introducí <span>${this.mensaje}</span>
     <em class="pista">${mensajePista}</em></label>
-    <input id="dato" modatype="text" value="">
+    <input id="dato" modatype="text" value="${textoInput}">
     <div class="controles">
     <button disabled class="exito" role="boton guardar cambio" type="button" id="guardar-modal" name="button"><i class="fas fa-save"></i> Guardar</button>
     <button type="button" role="boton descartar cambio" name="button"><i class="fas fa-trash"></i> Descartar</button>

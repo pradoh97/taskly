@@ -20,6 +20,12 @@
   justify-content: center;
 }
 
+#contador-tareas{
+  display: block;
+  font-weight: 400;
+  font-size: 0.7em;
+}
+
 .tarea{
   overflow-wrap: anywhere;
 }
