@@ -7,30 +7,26 @@
   font-style: normal;
 }
 #pendientes > span, .campo-editable{
+  transition-property: border-bottom;
+  transition-duration: var(--transicion-corta);
+  border-bottom: 1px solid transparent;
   cursor: pointer;
 }
 #pendientes > span:hover, .campo-editable:hover{
-  text-decoration: underline;
+  border-bottom-color:var(--color-contraste);
 }
 
-#agregar-tarea{
+.tarea, .carga .tarea > div, .grilla-tareas .tarea > div{
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
 }
 
-#contador-tareas{
-  display: block;
-  font-weight: 400;
-  font-size: 0.7em;
+.carga{
+  max-width: max-content;
+  margin-bottom: 3em;
 }
 
-.tarea{
-  overflow-wrap: anywhere;
-}
-.tarea, .grilla-tareas .tarea > div{
-  display: flex;
+.tarea > .campo{
+  margin-bottom: 1em;
 }
 .tarea, .carga .tarea > div{
   flex-flow: column;
@@ -38,7 +34,7 @@
 
 .grilla-tareas{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-rows: min-content;
   align-content: center;
   grid-gap: 2em 1em;
