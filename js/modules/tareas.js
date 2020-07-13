@@ -126,7 +126,7 @@ function completarTarea(e){
   while(!nodo.classList.contains('tarea')){
     nodo = nodo.parentElement;
   }
-
+  nodo.classList.add('completa');
   claveLS += nodo.dataset.idTarea;
 
   for(let i = 0; i<localStorage.length; i++){
