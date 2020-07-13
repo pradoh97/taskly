@@ -30,3 +30,15 @@ function obtenerUltimaTarea(){
   }
   return id;
 }
+
+function nombreUsuarioEstablecido(){
+  return localStorage.getItem(nombre.id);
+}
+
+function obtenerNombreUsuario(){
+  if(nombreUsuarioEstablecido()){
+    return nombreUsuarioEstablecido();
+  } else {
+    return 'tu nombre podría estar acá :(';
+  }
+}

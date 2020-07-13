@@ -1,25 +1,15 @@
 class Tarea {
   constructor(titulo, descripcion, id, estado) {
     this.titulo = titulo;
-    this.descripcion;
-    this.id;
-    this.estado;
+    this.descripcion = descripcion;
+    this.id = id;
+    this.estado = estado;
     this.nodo;
   }
-
-  crearTarea(){
+  mostrarTarea(){
     let atributoTarea;
-
-    if(!this.descripcion){
-      this.descripcion = 'Añadí una descripción de la tarea.';
-    }
-    if(!this.estado){
-      this.estado = 'incompleta';
-    }
     this.nodo = document.createElement('div');
     this.nodo.classList.add('tarea');
-    this.id = obtenerUltimaTarea() + 1;
-
     this.nodo.innerHTML = `
 
     <div class="titulo">
@@ -40,6 +30,21 @@ class Tarea {
 
     this.nodo.setAttributeNode(atributoTarea);
     grillaTareas.appendChild(this.nodo);
+
+  }
+  crearTarea(){
+
+
+    if(!this.descripcion){
+      this.descripcion = 'Añadí una descripción de la tarea.';
+    }
+    if(!this.estado){
+      this.estado = 'incompleta';
+    }
+
+    if(!this.id){
+      this.id = obtenerUltimaTarea() + 1;
+    }
 
     guardarLocalStorage('tarea-' + this.id, this);
 
@@ -64,4 +69,15 @@ function contarTareas(){
   }
 
   contadorTareas.innerText = mensaje;
+}
+
+function cargarTareas(){
+  for(let i = 0; i < localStorage.length; i++){
+    if(localStorage.key(i).includes('tarea')){
+      let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      let tarea = new Tarea(item.titulo, item.descripcion, item.id, item.estado);
+      tarea.mostrarTarea();
+
+    }
+  }
 }

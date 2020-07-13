@@ -18,16 +18,12 @@ class Modal {
     return this.obtenerIDLlamador().includes('nombre');
   }
 
-  nombreUsuarioEstablecido(){
-    return localStorage.getItem(this.obtenerIDLlamador());
-  }
-
   definirMensaje(){
     if(this.esNombreUsuario()){
       this.etiqueta = 'tu nombre.'
       this.pista = 'El que mejor te represente :)';
 
-      if(this.nombreUsuarioEstablecido()){
+      if(nombreUsuarioEstablecido()){
         this.textoEntrada = this.llamador.innerText;
       }
     }
@@ -83,7 +79,7 @@ class Modal {
     } else {
       let tarea = new Tarea(this.obtenerValorActual());
       tarea.crearTarea();
-      //tarea.mostrarTarea();
+      tarea.mostrarTarea();
     }
   }
 }
