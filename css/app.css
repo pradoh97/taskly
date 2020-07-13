@@ -1,3 +1,18 @@
+@media (max-width:500px){
+  .grilla-tareas{
+    display: flex;
+    flex-flow: column;
+  }
+}
+@media (min-width: 500px){
+  .grilla-tareas{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: min-content;
+    align-content: center;
+    grid-gap: 2em 1em;
+  }
+}
 .grilla-tareas .tarea > div{
   align-items: center;
 }
@@ -29,6 +44,10 @@
 .tarea{
   overflow-wrap: anywhere;
 }
+.tarea.completa div{
+  text-decoration: line-through;
+  color: var(--color-contraste-suave);
+}
 .tarea, .grilla-tareas .tarea > div{
   display: flex;
 }
@@ -36,13 +55,6 @@
   flex-flow: column;
 }
 
-.grilla-tareas{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: min-content;
-  align-content: center;
-  grid-gap: 2em 1em;
-}
 .grilla-tareas .tarea button{
   margin-top: 1em;
 }

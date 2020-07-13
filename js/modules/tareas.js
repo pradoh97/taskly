@@ -7,7 +7,7 @@ class Tarea {
     this.nodo;
   }
   mostrarTarea(){
-    let atributoTarea;
+    let atributoTarea, estado;
     this.nodo = document.createElement('div');
     this.nodo.classList.add('tarea');
     this.nodo.innerHTML = `
@@ -20,11 +20,21 @@ class Tarea {
     ${this.descripcion}
     </p>
     <i class="fas fa-pen"></i>
-    </div>
-
-    <button class="exito" type="button">
-    <i class="fas fa-check"></i> Marcar como completa.
-    </button>`;
+    </div>`;
+    if(this.estado === 'completa'){
+      this.nodo.classList.add('completa');
+      this.nodo.innerHTML += `
+      <button type="button">
+        <i class="fas fa-check"></i> Marcar como incompleta.
+      </button>`;
+    } else {
+      this.nodo.innerHTML += `
+      <button class="exito" type="button">
+        <i class="fas fa-check"></i> Marcar como completa.
+      </button>
+      `
+      this.nodo.querySelector('.exito').addEventListener('click', completarTarea);
+    }
     atributoTarea = document.createAttribute('data-id-tarea');
     atributoTarea.value = this.id;
 
@@ -33,8 +43,6 @@ class Tarea {
 
   }
   crearTarea(){
-
-
     if(!this.descripcion){
       this.descripcion = 'Añadí una descripción de la tarea.';
     }
@@ -54,21 +62,46 @@ class Tarea {
 }
 
 function contarTareas(){
-  let cantidadTareas = 0;
-  Array.from(grillaTareas.children).forEach(hijo => {
-    if(hijo.classList.contains('tarea')){
+  let cantidadTareas = 0, regExp = /tarea/;
+
+  for(let i = 0; i<localStorage.length; i++){
+    claveLS = localStorage.key(i);
+
+    if(regExp.test(claveLS)){
       cantidadTareas++;
     }
-  });
-
+  }
   if(cantidadTareas == 0){
     mensaje = '¿Nada para hacer? :)'
   } else if(cantidadTareas > 0){
-    /*Cuando se puedan marcar comom completas, el cero pasa a ser la cantidad de completas*/
-    mensaje = 0 + '/' + cantidadTareas;
+    mensaje = contarTareasCompletas() + '/' + cantidadTareas;
   }
 
   contadorTareas.innerText = mensaje;
+}
+
+function contarTareasCompletas(){
+  /*
+  TODO: Abstraer este for porque está repetido en 3 lugares.
+  */
+  let regExp = /tarea/;
+
+  let cantidadCompletas = 0;
+  let estadoTarea;
+  for(let i = 0; i<localStorage.length; i++){
+    claveLS = localStorage.key(i);
+    if(regExp.test(claveLS)){
+      estadoTarea = localStorage.getItem(localStorage.key(i));
+      estadoTarea = JSON.parse(estadoTarea);
+      estadoTarea = estadoTarea.estado;
+
+      if(estadoTarea === 'completa'){
+        cantidadCompletas++;
+      }
+    }
+  }
+
+  return cantidadCompletas;
 }
 
 function cargarTareas(){
@@ -80,4 +113,30 @@ function cargarTareas(){
 
     }
   }
+}
+
+function completarTarea(e){
+  let nodo = e.target;
+  nodo.classList.remove('exito');
+  nodo.innerHTML = `<i class="fas fa-check"></i> Marcar como incompleta.`;
+  let claveLS = 'tarea-';
+  let tarea;
+
+
+  while(!nodo.classList.contains('tarea')){
+    nodo = nodo.parentElement;
+  }
+
+  claveLS += nodo.dataset.idTarea;
+
+  for(let i = 0; i<localStorage.length; i++){
+    if(localStorage.key(i) == claveLS){
+      tarea = localStorage.getItem(claveLS);
+      tarea = JSON.parse(tarea);
+      tarea.estado = 'completa';
+      localStorage.setItem(claveLS, JSON.stringify(tarea));
+    }
+  }
+
+  contarTareas();
 }
