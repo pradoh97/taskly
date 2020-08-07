@@ -13,9 +13,6 @@
     grid-gap: 2em 1em;
   }
 }
-.grilla-tareas .tarea > div{
-  align-items: center;
-}
 
 #pendientes > span, #pendientes em{
   font-weight: 700;
@@ -23,6 +20,9 @@
 }
 #pendientes > span, .campo-editable{
   cursor: pointer;
+}
+.tarea .campo-editable.placeholder{
+  font-style: italic;
 }
 #pendientes > span:hover, .campo-editable:hover{
   text-decoration: underline;

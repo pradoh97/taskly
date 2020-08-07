@@ -57,7 +57,7 @@ button{
   transition-property: color, background-color, box-shadow;
   transition-duration: var(--transicion-corta);
 }
-button:hover:not(:disabled), button:focus{
+button:hover:not(:disabled), button:focus:not(.exito){
   box-shadow: 0 0 10em rgba(0, 0, 0, 0.3) inset;
 }
 button:active:not(:disabled){
