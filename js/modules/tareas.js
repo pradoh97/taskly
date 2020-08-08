@@ -22,25 +22,25 @@ class Tarea {
     this.nodo.innerHTML = `
 
     <div class="titulo">
-    <h2 class="campo-editable ${tituloPlaceholder}">${this.titulo}</h2><i class="fas fa-pen"></i>
+    <h2 class="campo-editable ${tituloPlaceholder}">${this.titulo}</h2><i class="fi-xnsuxl-pen-solid"></i>
     </div>
     <div class="descripcion">
     <p class="campo-editable">
     ${this.descripcion}
     </p>
-    <i class="fas fa-pen"></i>
+    <i class="fi-xnsuxl-pen-solid"></i>
     </div>`;
     if(this.estado === 'completa'){
       this.nodo.classList.add('completa');
       this.nodo.innerHTML += `
       <button type="button">
-        <i class="fas fa-check"></i> Marcar como incompleta.
+        <i class="fi-xwsuxl-check"></i> Marcar como incompleta.
       </button>`;
       this.nodo.querySelector('button').addEventListener('click', alternarTarea);
     } else {
       this.nodo.innerHTML += `
       <button class="exito" type="button">
-        <i class="fas fa-check"></i> Marcar como completa.
+        <i class="fi-xwsuxl-check"></i> Marcar como completa.
       </button>
       `
       this.nodo.querySelector('.exito').addEventListener('click', alternarTarea);
@@ -138,14 +138,17 @@ function alternarTarea(e){
 
   if(boton.classList.contains('exito')){
     boton.classList.remove('exito');
-    boton.innerHTML = `<i class="fas fa-check"></i> Marcar como incompleta.`;
+    boton.innerHTML = `<i class="fi-xwsuxl-check"></i> Marcar como incompleta.`;
     estado = 'completa';
     padre.classList.add(estado);
   } else {
     boton.classList.add('exito');
-    boton.innerHTML = `<i class="fas fa-check"></i> Marcar como completa.`;
+    boton.innerHTML = `<i class="fi-xwsuxl-check"></i> Marcar como completa.`;
     padre.classList.remove('completa')
   }
+
+  friconix_update();
+  
   let claveLS = 'tarea-';
   let tarea;
 
@@ -159,7 +162,6 @@ function alternarTarea(e){
       localStorage.setItem(claveLS, JSON.stringify(tarea));
     }
   }
-
   contarTareas();
 
 }

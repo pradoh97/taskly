@@ -9,13 +9,12 @@
 }
 label .pista{
   display: block;
-  color: var(--color-contraste-suave);
   font-size: 0.9em;
   font-style: italic;
 }
 label, input, button{
   font-weight: 400;
-  font-size: 0.9em;
+  font-size: 1em;
   font-family: inherit;
 }
 label, input{
@@ -56,20 +55,29 @@ button{
   padding: calc(0.5em - 2px) calc(1em - 2px);
   color: inherit;
   outline: none;
+  font-size: 1em;
   background-color: inherit;
   cursor: pointer;
-  transition-property: color, background-color, box-shadow;
+  transition-property: color, background-color, box-shadow, border;
   transition-duration: var(--transicion-corta);
+  display: flex;
+  justify-content: center;
 }
-button:hover:not(:disabled), button:focus:not(.exito){
+button:hover:not(:disabled){
   box-shadow: 0 0 10em rgba(0, 0, 0, 0.3) inset;
+}
+button:focus{
+  border-color: var(--color-exito);
+}
+button.exito:focus{
+  border-color: var(--color-contraste);
 }
 button:active:not(:disabled){
   box-shadow: 0 0 10em rgba(0, 0, 0, 0.5) inset;
 }
 
 button.peligro, button.exito, button:disabled{
-  border:none;
+  border-color: transparent;
 }
 
 button.peligro, button.exito{
@@ -96,7 +104,8 @@ button:disabled{
 }
 .modal > .dialogo{
   display: flex;
-  max-width: 400px;
+  width: 70vw;
+  max-width: 800px;
   padding: 1em 1.5em;
   margin: 0 auto;
   background: var(--color-normal-suave);

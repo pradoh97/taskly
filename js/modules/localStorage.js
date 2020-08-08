@@ -31,6 +31,13 @@ function obtenerUltimaTarea(){
   return id;
 }
 
+function obtenerColores(){
+  return localStorage.getItem('colores') == 'true';
+}
+function obtenerFuente(){
+  return localStorage.getItem('fuente') == 'true';
+}
+
 function nombreUsuarioEstablecido(){
   return localStorage.getItem(nombre.id);
 }

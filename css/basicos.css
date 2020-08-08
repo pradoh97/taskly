@@ -2,6 +2,22 @@
 
 :root{
   font-size: calc(0.8rem + 0.4vmax);
+}
+:root.grande{
+  font-size: calc(1.2rem + 0.4vmax);
+}
+h1, h2, p{
+  margin: 0;
+  padding: 0;
+}
+
+body.contraste{
+  --color-contraste: rgba(0, 0, 0, 1);
+  --color-normal: rgba(255, 255, 255, 1);
+  --color-normal-suave: rgba(170, 170, 170, 1);
+  --color-contraste-suave: rgba(60, 60, 60, 1);
+}
+body{
   --color-contraste: rgba(255, 255, 255, 1);
   --color-normal: rgba(0, 0, 0, 1);
   --color-normal-suave: rgba(60, 60, 60, 1);
@@ -10,13 +26,6 @@
   --color-peligro-apagado: rgba(138, 15, 15, 1);
   --color-exito: rgb(80, 150, 200);
   --transicion-corta: 0.2s;
-}
-h1, h2, p{
-  margin: 0;
-  padding: 0;
-}
-
-body{
   font-family: "Source Sans Pro";
   margin: 0;
   font-size: 1.2em;
@@ -26,6 +35,7 @@ body{
 }
 i{
   margin-right: 0.3em;
+
 }
 header{
   align-items: center;
@@ -42,6 +52,8 @@ header, main{
 }
 main{
   background-color: var(--color-normal-suave);
+  color: var(--color-contraste);
+  margin-bottom: 4em;
 }
 main h1{
   margin-bottom: 0.5em;
@@ -52,14 +64,13 @@ main h2{
   font-weight: 600;
 }
 
-.fas.fa-pen{
+.campo-editable + i{
   transition-property: opacity;
   transition-duration: var(--transicion-corta);
   opacity: 0;
   margin-right: 0;
   margin-left: 0.3em;
-  font-size: 0.8em;
 }
-.campo-editable:hover + .fas.fa-pen, .fas.fa-pen.visible{
+.campo-editable:hover + i, i.visible{
   opacity: 1;
 }

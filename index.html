@@ -7,23 +7,33 @@
     <link rel="stylesheet" href="css/formulario.css">
     <link rel="stylesheet" href="css/app.css">
     <title>Taskly</title>
+    <script defer src="js/friconix.js"> </script>
     <script type="text/javascript" src="js/modules/localStorage.js" defer></script>
     <script type="text/javascript" src="js/modules/modal.js" defer></script>
     <script type="text/javascript" src="js/modules/tareas.js" defer></script>
+    <script type="text/javascript" src="js/modules/alternadores.js" defer></script>
     <script type="text/javascript" src="js/app.js" defer></script>
-    <script src="https://kit.fontawesome.com/e465e8285d.js" crossorigin="anonymous" defer></script>
+
   </head>
   <body>
     <header>
+      <div class="opciones-flotantes">
+        <div class="alternador">
+          <button id="alternar-texto" title="Alternar tamaño de texto" type="button"><i class="fi-cnluxl-extra-large"></i>Tamaño de texto</button>
+        </div>
+        <div class="alternador">
+          <button id="alternar-colores" title="Alternar colores de contraste" type="button"><i class="fi-xnsuxl-bulb-solid"></i>Alternar contraste</button>
+        </div>
+      </div>
       <h1>Taskly</h1>
-      <p id="pendientes"><!--Tenés <em></em>,  esto es para poner cuantas tareas pendientes hay en un día, primero faltan los date pickers accesibles. --><span id="nombre-usuario" class="campo-editable">tu nombre podría estar acá :(</span>.<i class="fas fa-pen"></i></p>
+      <p id="pendientes"><!--Tenés <em></em>,  esto es para poner cuantas tareas pendientes hay en un día, primero faltan los date pickers accesibles. --><span id="nombre-usuario" class="campo-editable">tu nombre podría estar acá :(</span>.<i class="fi-xnsuxl-pen-solid"></i></p>
     </header>
     <main>
       <section>
         <h1>Tareas <span id="contador-tareas"></span></h1>
         <div class="grilla-tareas">
           <button id="agregar-tarea" class="tarea-placeholder">
-            <i class="fas fa-plus"></i> Agregar tarea
+            <i class="fi-xwsuxl-plus-solid"></i> Agregar tarea
           </button>
           <!--
             Selector de fecha accesible

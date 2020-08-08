@@ -55,8 +55,8 @@ class Modal {
       </label>
       <input id="dato" modatype="text" value="${this.textoEntrada}">
       <div class="controles">
-        <button disabled class="exito" role="boton guardar cambio" type="button" id="guardar-modal" name="button"><i class="fas fa-save"></i> Guardar</button>
-        <button type="button" role="boton descartar cambio" name="button"><i class="fas fa-trash"></i> Descartar</button>
+        <button disabled class="exito" role="boton guardar cambio" type="button" id="guardar-modal"><i class="fi-xnsuxl-hard-floppy"></i> Guardar</button>
+        <button type="button" role="boton descartar cambio"><i class="fi-xwsuxl-bin"></i> Descartar</button>
       </div>
     </div>`;
 
@@ -88,6 +88,7 @@ function generarModal(e){
   modal = new Modal(e);
   modal.definirMensaje();
   modal.mostrarModal();
+  friconix_update();
 }
 
 function guardarCambiosModal(e){
