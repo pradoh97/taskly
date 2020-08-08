@@ -14,14 +14,14 @@ h1, h2, p{
 body.contraste{
   --color-contraste: rgba(0, 0, 0, 1);
   --color-normal: rgba(255, 255, 255, 1);
-  --color-normal-suave: rgba(170, 170, 170, 1);
+  --color-normal-suave: rgba(200, 200, 200, 1);
   --color-contraste-suave: rgba(60, 60, 60, 1);
 }
 body{
   --color-contraste: rgba(255, 255, 255, 1);
   --color-normal: rgba(0, 0, 0, 1);
   --color-normal-suave: rgba(60, 60, 60, 1);
-  --color-contraste-suave: rgba(170, 170, 170, 1);
+  --color-contraste-suave: rgba(200, 200, 200, 1);
   --color-peligro: rgba(255, 60, 60, 1);
   --color-peligro-apagado: rgba(138, 15, 15, 1);
   --color-exito: rgb(80, 150, 200);
