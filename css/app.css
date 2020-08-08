@@ -3,6 +3,9 @@
     display: flex;
     flex-flow: column;
   }
+  .grilla-tareas .tarea{
+    margin-top: 1em;
+  }
 }
 @media (min-width: 500px){
   .grilla-tareas{

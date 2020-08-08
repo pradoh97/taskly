@@ -8,7 +8,7 @@ iniciarApp();
 function iniciarApp(){
   nombre.addEventListener('click', generarModal);
   botonAgregarTarea.addEventListener('click', generarModal);
-  
+
   nombre.innerText = obtenerNombreUsuario();
 
   contarTareas();
