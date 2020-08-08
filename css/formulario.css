@@ -1,7 +1,9 @@
 @media (max-width:400px){
   .modal button{
-    /* flex-grow: 1; */
-    width: 100%;
+    flex-basis: 100%;
+  }
+  :root.grande main{
+    margin-bottom: 10em;
   }
 }
 .modal label{
@@ -101,6 +103,7 @@ button:disabled{
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
 }
 .modal > .dialogo{
   display: flex;
