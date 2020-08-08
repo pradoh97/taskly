@@ -31,6 +31,10 @@ input{
   outline: none;
   transition-property: border;
 }
+input::selection{
+  color: var(--color-normal);
+  background-color: var(--color-contraste);
+}
 input::placeholder{
   color: var(--color-contraste-suave);
 }
