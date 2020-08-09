@@ -44,8 +44,10 @@
 #pendientes > span, .campo-editable{
   cursor: pointer;
   flex-grow: 1;
+  padding: 0.2em 0;
 }
 .tarea input{
+  min-width: 0;
   flex-grow: 1;
   margin-right: 0.3em;
 }

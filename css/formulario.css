@@ -28,6 +28,7 @@ input{
   padding: 0.5em;
   border: 2px solid transparent;
   border-bottom: 2px solid var(--color-contraste-suave);
+  font-size: 1em;
   box-shadow: none;
   outline: none;
   transition-property: border;
