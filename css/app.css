@@ -18,18 +18,37 @@
 }
 .opciones-flotantes{
   position: fixed;
-  bottom: 10px;
-  right: 10px;
+  bottom: 0;
+  right: 0;
+  left: 0;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
+  flex-flow: column;
+  background-color: inherit;
+  padding: 1em 2em;
 }
 .alternador{
   transition-duration: var(--transicion-corta);
   transition-property: opacity;
-  margin-left: 1em;
-  margin-top: 1em;
   background-color: var(--color-normal);
+  display: flex;
+  align-items: center;
+}
+.alternador + .alternador{
+  margin-top: 1em;
+}
+@media (min-width: 40em){
+  .opciones-flotantes{
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+  }
+  .alternador{
+    margin-left: 1em;
+    margin-top: 0;
+    flex-grow: 0;
+  }
+  .alternador + .alternador{
+    margin-top: 0;
+  }
 }
 .alternador:hover{
   opacity: 0.7;

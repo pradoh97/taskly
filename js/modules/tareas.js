@@ -53,6 +53,7 @@ class Tarea {
 
     this.nodo.setAttributeNode(atributoTarea);
     grillaTareas.appendChild(this.nodo);
+    friconix_update();
 
   }
   crearTarea(){
@@ -148,7 +149,7 @@ function alternarTarea(e){
   }
 
   friconix_update();
-  
+
   let claveLS = 'tarea-';
   let tarea;
 

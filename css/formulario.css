@@ -55,7 +55,7 @@ input.invalido:focus{
 button{
   border-radius: 0;
   border: 2px solid var(--color-contraste);
-  padding: calc(0.5em - 2px) calc(1em - 2px);
+  padding: 0.5em 0.75em;
   color: inherit;
   outline: none;
   font-size: 1em;
@@ -65,6 +65,7 @@ button{
   transition-duration: var(--transicion-corta);
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 button:hover:not(:disabled){
   box-shadow: 0 0 10em rgba(0, 0, 0, 0.3) inset;

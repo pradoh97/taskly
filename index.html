@@ -18,12 +18,11 @@
   <body>
     <header>
       <div class="opciones-flotantes">
-        <div class="alternador">
-          <button id="alternar-texto" title="Alternar tamaño de texto" type="button"><i class="fi-cnluxl-extra-large"></i>Tamaño de texto</button>
-        </div>
-        <div class="alternador">
-          <button id="alternar-colores" title="Alternar colores de contraste" type="button"><i class="fi-xnsuxl-bulb-solid"></i>Alternar contraste</button>
-        </div>
+          <button class="alternador" id="alternar-texto" title="Alternar tamaño de texto" type="button"><i class="fi-cnluxl-extra-large"></i>Tamaño de texto</button>
+          <button class="alternador" id="alternar-colores" title="Alternar colores de contraste" type="button"><i class="fi-xnsuxl-bulb-solid"></i>Alternar contraste</button>
+          <button id="agregar-tarea" class="tarea-placeholder alternador">
+            <i class="fi-xwsuxl-plus-solid"></i> Agregar tarea
+          </button>
       </div>
       <h1>Taskly</h1>
       <p id="pendientes"><!--Tenés <em></em>,  esto es para poner cuantas tareas pendientes hay en un día, primero faltan los date pickers accesibles. --><span id="nombre-usuario" class="campo-editable">tu nombre podría estar acá :(</span>.<i class="fi-xnsuxl-pen-solid"></i></p>
@@ -32,9 +31,7 @@
       <section>
         <h1>Tareas <span id="contador-tareas"></span></h1>
         <div class="grilla-tareas">
-          <button id="agregar-tarea" class="tarea-placeholder">
-            <i class="fi-xwsuxl-plus-solid"></i> Agregar tarea
-          </button>
+
           <!--
             Selector de fecha accesible
             https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html
