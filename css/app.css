@@ -19,6 +19,7 @@
 .opciones{
   margin: 0;
   height: 0;
+  width: 0;
   visibility: collapse;
   opacity: 0;
   transition: opacity 0.3s;
@@ -40,6 +41,7 @@
   visibility: visible;
   margin: 2.5em 0 0;
   height: auto;
+  width: auto;
 }
 .opciones-flotantes.visibles #alternar-opciones i{
   transform: rotateZ(-90deg);
