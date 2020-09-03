@@ -31,3 +31,8 @@ function alternarTexto(e, boton=""){
   }
   friconix_update();
 }
+
+function alternarOpciones(e){
+  let opciones = document.querySelector('.opciones-flotantes');
+  opciones.classList.toggle('visibles');
+}
