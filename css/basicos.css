@@ -49,7 +49,7 @@ header, main{
 main{
   background-color: var(--color-normal-suave);
   color: var(--color-contraste);
-  margin-bottom: 4em;
+  margin-bottom: 8em;
 }
 main h1{
   margin-bottom: 0.5em;

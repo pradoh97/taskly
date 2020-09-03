@@ -1,13 +1,12 @@
-@media (max-width:500px){
-  .grilla-tareas{
-    display: flex;
-    flex-flow: column;
-  }
-  .grilla-tareas .tarea{
-    margin-top: 1em;
-  }
+.grilla-tareas{
+  display: flex;
+  flex-flow: column;
 }
-@media (min-width: 500px){
+.grilla-tareas .tarea{
+  margin-top: 1em;
+}
+
+@media (min-width: 32em){
   .grilla-tareas{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -16,15 +15,38 @@
     grid-gap: 2em 1em;
   }
 }
+
+.opciones{
+  margin: 0;
+  height: 0;
+  visibility: collapse;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
 .opciones-flotantes{
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
+  background-color: var(--color-normal);
+  padding: 1em 2em;
+}
+.opciones, .opciones-flotantes{
   display: flex;
   flex-flow: column;
-  background-color: inherit;
-  padding: 1em 2em;
+}
+.opciones-flotantes.visibles .opciones{
+  opacity: 1;
+  visibility: visible;
+  margin: 2.5em 0 0;
+  height: auto;
+}
+.opciones-flotantes.visibles #alternar-opciones i{
+  transform: rotateZ(-90deg);
+}
+#alternar-opciones i{
+  transition: transform 0.3s;
+  transform: rotateZ(90deg);
 }
 .alternador{
   transition-duration: var(--transicion-corta);
@@ -33,11 +55,14 @@
   display: flex;
   align-items: center;
 }
-.alternador + .alternador{
+.alternador + .alternador {
   margin-top: 1em;
 }
 @media (min-width: 40em){
-  .opciones-flotantes{
+  .opciones-flotantes.visibles .opciones{
+    margin: 0 0 0 2.5em;
+  }
+  .opciones-flotantes, .opciones{
     flex-flow: row nowrap;
     justify-content: flex-end;
   }
@@ -48,6 +73,13 @@
   }
   .alternador + .alternador{
     margin-top: 0;
+  }
+  #alternar-opciones i{
+    transform: rotateZ(0deg);
+    transition: transform 0.3s;
+  }
+  .opciones-flotantes.visibles #alternar-opciones i{
+    transform: rotateZ(180deg);
   }
 }
 .alternador:hover{
@@ -62,7 +94,6 @@
 }
 #pendientes > span, .campo-editable{
   cursor: pointer;
-  flex-grow: 1;
   padding: 0.2em 0;
 }
 .tarea input{
