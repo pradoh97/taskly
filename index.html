@@ -18,11 +18,17 @@
   <body>
     <header>
       <div class="opciones-flotantes">
+        <button class="alternador" id="alternar-opciones" title="Alternar opciones">
+          <i class="fi-xnslxl-chevron-solid"></i>
+        </button>
+        <div class="opciones">
           <button class="alternador" id="alternar-texto" title="Alternar tamaño de texto" type="button"><i class="fi-cnluxl-extra-large"></i>Tamaño de texto</button>
-          <button class="alternador" id="alternar-colores" title="Alternar colores de contraste" type="button"><i class="fi-xnsuxl-bulb-solid"></i>Alternar contraste</button>
-          <button id="agregar-tarea" class="tarea-placeholder alternador">
+          <button class="alternador" id="alternar-colores" title="Alternar colores de contraste" type="button">
+            <i class="fi-xnsuxl-bulb-solid"></i>Alternar contraste</button>
+          <button id="agregar-tarea" class="tarea-placeholder alternador" title="Agregar tarea nueva">
             <i class="fi-xwsuxl-plus-solid"></i> Agregar tarea
           </button>
+        </div>
       </div>
       <h1>Taskly</h1>
       <p id="pendientes"><!--Tenés <em></em>,  esto es para poner cuantas tareas pendientes hay en un día, primero faltan los date pickers accesibles. --><span id="nombre-usuario" class="campo-editable">tu nombre podría estar acá :(</span>.<i class="fi-xnsuxl-pen-solid"></i></p>
