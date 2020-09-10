@@ -7,6 +7,10 @@ function guardarLocalStorage(clave, valor){
   }
 }
 
+function obtenerTarea(claveLS){
+  return JSON.parse(localStorage.getItem(claveLS));
+}
+
 function obtenerClaveTarea(claveLS){
   let idTarea;
   idTarea = localStorage.getItem(claveLS);
