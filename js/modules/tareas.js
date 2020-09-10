@@ -76,16 +76,10 @@ class Tarea {
 }
 
 function contarTareas(){
-  let cantidadTareas = 0, regExp = /tarea/;
+  let cantidadTareas = 0;
+  iterarTareas(clave => clave.includes('tarea'), () => cantidadTareas++);
 
-  for(let i = 0; i<localStorage.length; i++){
-    claveLS = localStorage.key(i);
-
-    if(regExp.test(claveLS)){
-      cantidadTareas++;
-    }
-  }
-  if(cantidadTareas == 0){
+  if(!cantidadTareas){
     mensaje = '¿Nada para hacer? :)'
   } else if(cantidadTareas > 0){
     mensaje = contarTareasCompletas() + '/' + cantidadTareas;
@@ -94,39 +88,38 @@ function contarTareas(){
   contadorTareas.innerText = mensaje;
 }
 
+function iterarTareas(test, modificador){
+  for(let i = 0; i<localStorage.length; i++){
+    if(test(localStorage.key(i))) modificador(localStorage.key(i));
+  }
+}
+
 function contarTareasCompletas(){
-  /*
-  TODO: Abstraer este for porque está repetido en 3 lugares.
-  */
-  let regExp = /tarea/;
 
   let cantidadCompletas = 0;
   let estadoTarea;
-  for(let i = 0; i<localStorage.length; i++){
-    claveLS = localStorage.key(i);
-    if(regExp.test(claveLS)){
-      estadoTarea = localStorage.getItem(localStorage.key(i));
-      estadoTarea = JSON.parse(estadoTarea);
-      estadoTarea = estadoTarea.estado;
 
-      if(estadoTarea === 'completa'){
-        cantidadCompletas++;
-      }
-    }
-  }
-
+  iterarTareas(
+    claveLS => claveLS.includes('tarea'),
+    tarea => {
+      if(obtenerTarea(tarea).estado === 'completa') cantidadCompletas++;
+  });
   return cantidadCompletas;
 }
 
 function cargarTareas(){
-  for(let i = 0; i < localStorage.length; i++){
-    if(localStorage.key(i).includes('tarea')){
-      let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-      let tarea = new Tarea(item.titulo, item.descripcion, item.id, item.estado);
-      tarea.mostrarTarea();
+  let tareas = [];
 
-    }
-  }
+  iterarTareas(
+    claveLS => claveLS.includes('tarea'),
+    tarea => {
+      tarea = obtenerTarea(tarea);
+      tareas.push(new Tarea(tarea.titulo, tarea.descripcion, tarea.id, tarea.estado));
+  });
+
+  tareas.sort((a,b) => a.id > b.id);
+  for(tarea of tareas) tarea.mostrarTarea();
+
 }
 function alternarTarea(e){
   let boton = e.target;
@@ -137,34 +130,31 @@ function alternarTarea(e){
     padre = padre.parentElement;
   }
 
-  if(boton.classList.contains('exito')){
-    boton.classList.remove('exito');
+  if(boton.classList.toggle('exito')){
+    boton.innerHTML = `<i class="fi-xwsuxl-check"></i> Marcar como completa.`;
+    estado = 'incompleta';
+  }
+  else {
     boton.innerHTML = `<i class="fi-xwsuxl-check"></i> Marcar como incompleta.`;
     estado = 'completa';
-    padre.classList.add(estado);
-  } else {
-    boton.classList.add('exito');
-    boton.innerHTML = `<i class="fi-xwsuxl-check"></i> Marcar como completa.`;
-    padre.classList.remove('completa')
   }
+
+  padre.classList.toggle('completa');
 
   friconix_update();
 
-  let claveLS = 'tarea-';
-  let tarea;
+  let id = padre.dataset.idTarea;
 
-  claveLS += padre.dataset.idTarea;
-
-  for(let i = 0; i<localStorage.length; i++){
-    if(localStorage.key(i) == claveLS){
-      tarea = localStorage.getItem(claveLS);
-      tarea = JSON.parse(tarea);
+  iterarTareas(
+    claveLS => claveLS.endsWith(id),
+    tarea => {
+      claveLS = tarea;
+      tarea = obtenerTarea(tarea);
       tarea.estado = estado;
-      localStorage.setItem(claveLS, JSON.stringify(tarea));
-    }
-  }
-  contarTareas();
+      guardarLocalStorage(claveLS, tarea);
+  });
 
+  contarTareas();
 }
 
 function editarTarea(e){
@@ -191,7 +181,7 @@ function guardarCambiosTarea(e){
 
   if(e.keyCode == 13 || e.which == 13 || e.type == 'blur'){
     let idTarea = e.target.parentElement.parentElement.dataset.idTarea;
-    let tareaOriginal = JSON.parse(localStorage.getItem('tarea-' + idTarea));
+    let tareaOriginal = obtenerTarea('tarea-' + idTarea);
     if(tarea.parentElement.classList.contains('descripcion')){
       tareaOriginal.descripcion = texto;
     } else if (tarea.parentElement.classList.contains('titulo')){
