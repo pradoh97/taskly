@@ -14,7 +14,7 @@ h1, h2, p{
 body.contraste{
   --color-contraste: rgba(0, 0, 0, 1);
   --color-normal: rgba(255, 255, 255, 1);
-  --color-normal-suave: rgba(200, 200, 200, 1);
+  --color-normal-suave: var(--color-normal);
   --color-contraste-suave: rgba(60, 60, 60, 1);
 }
 body{
@@ -47,7 +47,7 @@ header, main{
   padding: 1em 2em;
 }
 main{
-  background-color: var(--color-normal-suave);
+  background-color: var(--color-normal);
   color: var(--color-contraste);
   margin-bottom: 8em;
 }

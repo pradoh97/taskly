@@ -20,16 +20,16 @@ class Tarea {
     this.nodo = document.createElement('div');
     this.nodo.classList.add('tarea');
     this.nodo.innerHTML = `
-
-    <div class="titulo">
-    <h2 class="campo-editable ${tituloPlaceholder}">${this.titulo}</h2><i class="fi-xnsuxl-pen-solid"></i>
-    </div>
-    <div class="descripcion">
-    <p class="campo-editable">
-    ${this.descripcion}
-    </p>
-    <i class="fi-xnsuxl-pen-solid"></i>
-    </div>`;
+      <div class="titulo">
+      <h2 class="campo-editable ${tituloPlaceholder}">${this.titulo}</h2><i class="fi-xnsuxl-pen-solid"></i>
+      </div>
+      <div class="descripcion">
+      <p class="campo-editable">
+      ${this.descripcion}
+      </p>
+      <i class="fi-xnsuxl-pen-solid"></i>
+      </div>
+    `;
     if(this.estado === 'completa'){
       this.nodo.classList.add('completa');
       this.nodo.innerHTML += `
@@ -46,6 +46,12 @@ class Tarea {
       this.nodo.querySelector('.exito').addEventListener('click', alternarTarea);
     }
 
+    this.nodo.innerHTML += `
+    <button class="peligro" type="button">
+      <i class="fi-xwsuxl-bin"></i> Eliminar tarea.
+    </button>
+    `
+    this.nodo.querySelector('.peligro').addEventListener('click', eliminarTarea);
     this.nodo.querySelector('h2.campo-editable').addEventListener('click', editarTarea);
     this.nodo.querySelector('p.campo-editable').addEventListener('click', editarTarea);
     atributoTarea = document.createAttribute('data-id-tarea');
@@ -56,6 +62,7 @@ class Tarea {
     friconix_update();
 
   }
+
   crearTarea(){
     if(!this.descripcion){
       this.descripcion = 'Añadí una descripción de la tarea.';
@@ -72,7 +79,6 @@ class Tarea {
 
     contarTareas();
   }
-
 }
 
 function contarTareas(){
@@ -169,7 +175,9 @@ function editarTarea(e){
   input.addEventListener('keyup', guardarCambiosTarea);
   input.addEventListener('blur', guardarCambiosTarea);
 }
-
+function eliminarTarea(e){
+  
+}
 function guardarCambiosTarea(e){
   let texto = e.target.value;
   let esPlaceHolder = false;

@@ -52,6 +52,9 @@ input.invalido{
 input.invalido:focus{
   border: 2px solid var(--color-peligro);
 }
+button.peligro, button.exito{
+  color: var(--color-normal);
+}
 button{
   border-radius: 0;
   border: 2px solid var(--color-contraste);

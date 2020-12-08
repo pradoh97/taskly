@@ -1,6 +1,7 @@
 .grilla-tareas{
   display: flex;
   flex-flow: column;
+  padding: 0.5em 0 1em;
 }
 .grilla-tareas .tarea{
   margin-top: 1em;
