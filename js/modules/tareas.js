@@ -21,13 +21,13 @@ class Tarea {
     this.nodo.classList.add('tarea');
     this.nodo.innerHTML = `
       <div class="titulo">
-      <h2 class="campo-editable ${tituloPlaceholder}">${this.titulo}</h2><i class="fi-xnsuxl-pen-solid"></i>
+        <h2 class="campo-editable ${tituloPlaceholder}">${this.titulo}</h2><i class="fi-xnsuxl-pen-solid"></i>
       </div>
       <div class="descripcion">
-      <p class="campo-editable">
-      ${this.descripcion}
-      </p>
-      <i class="fi-xnsuxl-pen-solid"></i>
+        <p class="campo-editable">
+        ${this.descripcion}
+        </p>
+        <i class="fi-xnsuxl-pen-solid"></i>
       </div>
     `;
     if(this.estado === 'completa'){
@@ -42,25 +42,30 @@ class Tarea {
       <button class="exito" type="button">
         <i class="fi-xwsuxl-check"></i> Marcar como completa.
       </button>
-      `
+      `;
       this.nodo.querySelector('.exito').addEventListener('click', alternarTarea);
     }
 
-    this.nodo.innerHTML += `
-    <button class="peligro" type="button">
-      <i class="fi-xwsuxl-bin"></i> Eliminar tarea.
-    </button>
-    `
-    this.nodo.querySelector('.peligro').addEventListener('click', eliminarTarea);
+    let eliminar = document.createElement('button');
+
+    eliminar.innerHTML = `<i class="fi-xwsuxl-bin"></i> Eliminar tarea.`;
+    eliminar.classList.add('peligro');
+    this.nodo.appendChild(eliminar)
+
+    //Ver por qué no funciona así
+    // this.nodo.innerHTML += `<button class="peligro" type="button"><i class="fi-xwsuxl-bin"></i>Eliminar tarea.</button>`;
+
     this.nodo.querySelector('h2.campo-editable').addEventListener('click', editarTarea);
     this.nodo.querySelector('p.campo-editable').addEventListener('click', editarTarea);
+    this.nodo.querySelector('.peligro').addEventListener('click', generarModal);
+
     atributoTarea = document.createAttribute('data-id-tarea');
     atributoTarea.value = this.id;
 
     this.nodo.setAttributeNode(atributoTarea);
+
     grillaTareas.appendChild(this.nodo);
     friconix_update();
-
   }
 
   crearTarea(){
@@ -128,6 +133,7 @@ function cargarTareas(){
   for(tarea of tareas) tarea.mostrarTarea();
 
 }
+
 function alternarTarea(e){
   let boton = e.target;
   let padre = boton;
@@ -175,9 +181,21 @@ function editarTarea(e){
   input.addEventListener('keyup', guardarCambiosTarea);
   input.addEventListener('blur', guardarCambiosTarea);
 }
-function eliminarTarea(e){
-  
+
+function eliminarTarea(id){
+
+  let padre = document.querySelector(`[data-id-tarea=${id}]`);
+
+  iterarTareas(
+    claveLS => claveLS.endsWith(id),
+    tarea => {
+      localStorage.removeItem(tarea);
+  });
+
+  padre.remove();
+  contarTareas();
 }
+
 function guardarCambiosTarea(e){
   let texto = e.target.value;
   let esPlaceHolder = false;

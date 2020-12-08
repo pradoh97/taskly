@@ -1,3 +1,22 @@
+class Alternador {
+  get alternadores(){
+    let alternadores = document.querySelectorAll('.alternador');
+
+    for(let alternador of alternadores){
+      this[alternador.id] = alternador;
+      this[alternador.id].addEventListener('click', this.ejecutarAlternador);
+    }
+  }
+
+  ejecutarAlternador(e){
+    e.stopPropagation();
+    let boton = e.target;
+    console.log(boton);
+    if(boton.id.contains('fuente')) console.log("asd");
+  }
+
+
+}
 function alternarColores(e){
   let coloresAlternados = obtenerColores();
 
