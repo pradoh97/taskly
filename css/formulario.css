@@ -5,6 +5,9 @@
   :root.grande main{
     margin-bottom: 10em;
   }
+  .modal .controles{
+    flex-flow: column;
+  }
 }
 .modal label{
   margin-bottom: 1em;
