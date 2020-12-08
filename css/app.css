@@ -62,26 +62,34 @@
   margin-top: 1em;
 }
 @media (min-width: 40em){
+  .opciones-flotantes{
+    padding-bottom: 0;
+  }
+  .alternador + .alternador{
+    margin-top: 0;
+  }
+  .alternador{
+    margin-left: 1em;
+    flex-grow: 0;
+    margin-bottom: 1em;
+  }
+  /* Solo funciona en firefox */
+  /* @supports (gap: 1em){ */
+    /* .opciones-flotantes.visibles .opciones{
+      gap: 1em;
+    } */
+  /* } */
   .opciones-flotantes.visibles .opciones{
     margin: 0 0 0 2.5em;
     flex-flow: row wrap;
-    gap: 1em;
   }
   .opciones-flotantes, .opciones{
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-end;
   }
-  .alternador{
-    margin-left: 1em;
-    margin-top: 0;
-    flex-grow: 0;
-  }
   .opciones-flotantes.visibles .opciones .alternador{
     flex-grow: 1;
-  }
-  .alternador + .alternador{
-    margin-top: 0;
   }
   #alternar-opciones i{
     transform: rotateZ(0deg);
