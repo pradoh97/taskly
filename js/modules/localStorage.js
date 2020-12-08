@@ -1,16 +1,14 @@
-class LS{
-  guardar(clave, valor){
-    if(typeof valor === 'object'){
-      localStorage.setItem(clave, JSON.stringify(valor));
-      return;
-    } else {
-      localStorage.setItem(clave, valor);
-    }
+function guardarLocalStorage(clave, valor){
+  if(typeof valor === 'object'){
+    localStorage.setItem(clave, JSON.stringify(valor));
+    return;
+  } else {
+    localStorage.setItem(clave, valor);
   }
+}
 
-  obtenerTarea(clave){
-    return JSON.parse(localStorage.getItem(clave));
-  }
+function obtenerTarea(claveLS){
+  return JSON.parse(localStorage.getItem(claveLS));
 }
 
 function obtenerClaveTarea(claveLS){
@@ -40,7 +38,6 @@ function obtenerUltimaTarea(){
 function obtenerColores(){
   return localStorage.getItem('colores') == 'true';
 }
-
 function obtenerFuente(){
   return localStorage.getItem('fuente') == 'true';
 }

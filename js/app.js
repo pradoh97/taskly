@@ -1,8 +1,10 @@
-const nombre = document.getElementById('nombre-usuario');
-const botonAgregarTarea = document.getElementById('agregar-tarea');
-const grillaTareas = document.querySelector('.grilla-tareas');
-const contadorTareas = document.getElementById('contador-tareas');
-const alternadores = new Alternador();
+let nombre = document.getElementById('nombre-usuario');
+let botonAgregarTarea = document.getElementById('agregar-tarea');
+let grillaTareas = document.querySelector('.grilla-tareas');
+let contadorTareas = document.getElementById('contador-tareas');
+let botonAlternarColores = document.getElementById('alternar-colores');
+let botonAlternarTexto = document.getElementById('alternar-texto');
+let botonAlternarOpciones = document.getElementById('alternar-opciones');
 let modal;
 
 iniciarApp();
@@ -10,12 +12,14 @@ iniciarApp();
 function iniciarApp(){
   nombre.addEventListener('click', generarModal);
   botonAgregarTarea.addEventListener('click', generarModal);
-  alternadores.alternadores;
+  botonAlternarColores.addEventListener('click', alternarColores);
+  botonAlternarTexto.addEventListener('click', alternarTexto);
+  botonAlternarOpciones.addEventListener('click', alternarOpciones);
   nombre.innerText = obtenerNombreUsuario();
 
-  //cargarTareas();
-  // alternarColores(null);
-  // alternarTexto(null, botonAlternarTexto);
+  cargarTareas();
+  alternarColores(null);
+  alternarTexto(null, botonAlternarTexto);
 
-  //if(!contarTareas()) alternarOpciones();
+  if(!contarTareas()) alternarOpciones();
 }
