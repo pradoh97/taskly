@@ -86,6 +86,7 @@ function contarTareas(){
   }
 
   contadorTareas.innerText = mensaje;
+  return cantidadTareas;
 }
 
 function iterarTareas(test, modificador){

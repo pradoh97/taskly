@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');*/
 
 :root{
   font-size: calc(0.8rem + 0.4vmax);
@@ -26,7 +26,7 @@ body{
   --color-peligro-apagado: rgba(138, 15, 15, 1);
   --color-exito: rgb(80, 150, 200);
   --transicion-corta: 0.2s;
-  font-family: "Source Sans Pro";
+  font-family: "Source Sans Pro", sans-serif;
   margin: 0;
   font-size: 1.2em;
   color: var(--color-contraste);

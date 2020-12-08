@@ -16,8 +16,10 @@ function iniciarApp(){
   botonAlternarTexto.addEventListener('click', alternarTexto);
   botonAlternarOpciones.addEventListener('click', alternarOpciones);
   nombre.innerText = obtenerNombreUsuario();
-  contarTareas();
+
   cargarTareas();
   alternarColores(null);
   alternarTexto(null, botonAlternarTexto);
+
+  if(!contarTareas()) alternarOpciones();
 }
