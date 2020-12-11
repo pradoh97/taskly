@@ -1,6 +1,6 @@
 class Tarea {
   constructor(id, titulo, descripcion, completa) {
-    this.id = 'tarea-' + id;
+    this.id = id;
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.completa = completa;
@@ -25,11 +25,8 @@ class Tarea {
     //valor es el valor de la tarea en localStorage.
     let valor = {};
 
-    //Este es el número que va en el atributo data-id-tarea del elemento en el DOM de la tarea correspondiente.
-    let idNumerico = Tarea.extraerIDNumerico(this.id);
-
     //Es la tarea en el DOM
-    let tareaDOM = Tarea.obtenerTarea(idNumerico).DOM;
+    let tareaDOM = Tarea.obtenerTarea(this.id).DOM;
 
     //Es el elemento que se va a agregar/actualizar en el DOM.
     let html = document.createElement('div');
@@ -40,7 +37,7 @@ class Tarea {
       `;
 
     //Se añade el atributo data-id-tarea=n (n es el idNunmerico).
-    html.dataset['idTarea'] = idNumerico;
+    html.dataset['idTarea'] = this.id;
 
     //Si la tarea no existe en el DOM (porque el método está siendo ejecutado con la intención de crear una tarea nueva) entonces se la agrega.
     if(!tareaDOM) document.body.appendChild(html);
@@ -48,21 +45,26 @@ class Tarea {
     //Sino, se actualiza el contenido del elemento.
     else tareaDOM.innerHTML = html.innerHTML;
 
-    //La tarea en localStorage no lleva como valor el ID, ya que este se usa para identificarla de entre el resto (mediante la key de localStorage). Así que esa clave no tiene que ser publicada.
-    let clavesParaEliminar = ['id'];
+    /* Todo esto era para el método Utils.filtrarClavesObjeto pero ya no se usa. Los ID's van también al valor de cada clave de localStorage.
 
-    //Para eso defino un filtro que en este caso define qué claves quedan en localStorage como valor y cuales no.
-    let filtro = function (clave, clavesParaEliminar){
+      //La tarea en localStorage no lleva como valor el ID, ya que este se usa para identificarla de entre el resto (mediante la key de localStorage). Así que esa clave no tiene que ser publicada.
+      let clavesParaEliminar = ['id'];
 
-      //La intención de esta prueba aceptar todas las claves que no formen parte del array de clavesParaEliminar.
-      return !clavesParaEliminar.includes(clave);
-    }
+      //Para eso defino un filtro que en este caso define qué claves quedan en localStorage como valor y cuales no.
+      let filtro = function (clave, clavesParaEliminar){
 
-    //valor es el valor de la tarea en localStorage.
-    valor = Utils.filtrarClavesObjeto(this, filtro, clavesParaEliminar);
+        //La intención de esta prueba aceptar todas las claves que no formen parte del array de clavesParaEliminar.
+        return !clavesParaEliminar.includes(clave);
+      }
+
+
+      Método sin uso, se guarda el id en el valor de localStorage también.
+      //valor es el valor de la tarea en localStorage.
+      valor = Utils.filtrarClavesObjeto(this, filtro, clavesParaEliminar);
+    */
 
     //Se crea/modifica una entrada en localStorage que tiene como clave el id de la tarea y como valor el resto de las claves del objeto tarea.
-    localStorage.setItem(this.id, JSON.stringify(valor));
+    localStorage.setItem("tarea-" + this.id, JSON.stringify(this));
   }
 
   //Alterna el estado de una tarea en localStorage, memoria y en el DOM.
@@ -134,14 +136,16 @@ class Tarea {
     //Creamos una tarea vacía para, después, agregarle los valores a cada atributo.
     let tarea = {};
 
-    //Verifico si el id que recibe el método es un string. Si lo es y no incluye la palabra 'tarea' se la agrega, esto para poder obtenerlo en base a la clave del localStorage.
-    if(typeof id != 'string' && !id.toString().includes('tarea')) id = 'tarea-' + id;
+    /*
+      //Verifico si el id que recibe el método es un string. Si lo es y no incluye la palabra 'tarea' se la agrega, esto para poder obtenerlo en base a la clave del localStorage.
+      if(typeof id != 'string' && !id.toString().includes('tarea')) id = 'tarea-' + id;
+    */
 
     //Busco la tarea en el DOM y la guardo.
-    tarea.DOM = document.querySelector(`[data-id-tarea="${Tarea.extraerIDNumerico(id)}"]`);
+    tarea.DOM = document.querySelector(`[data-id-tarea="${id}"]`);
 
     //Obtengo la tarea de localStorage
-    tarea["LS"] = JSON.parse(localStorage.getItem(id));
+    tarea["LS"] = JSON.parse(localStorage.getItem("tarea-" + id));
 
     //Si existe esa tarea, entonces paso todos los valores del objeto de localStorage al objeto de clase Tarea (así tiene los métodos).
     if(tarea["LS"]) tarea["LS"] = Tarea.convertirTarea(tarea["LS"], id);
@@ -156,7 +160,7 @@ class Tarea {
     //Es la función que uso para encontrar tareas y convertirlas a un objeto de clase localStorage.
     let filtro = function (clave, LS){
       let tarea = JSON.parse(LS[clave]);
-      tarea = Tarea.convertirTarea(tarea, Tarea.extraerIDNumerico(clave));
+      tarea = Tarea.convertirTarea(tarea);
       return tarea;
     }
 
@@ -183,8 +187,6 @@ class Tarea {
     for(let clave in tareaLS){
       tarea[clave] = tareaLS[clave];
     }
-
-    tarea.id = id;
 
     return tarea;
   }
