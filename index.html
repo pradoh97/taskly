@@ -1,56 +1,13 @@
 <!DOCTYPE html>
-<html lang="es" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1">
-    <script defer src="js/friconix.js"> </script>
-    <script type="text/javascript" src="js/modules/localStorage.js" defer></script>
-    <script type="text/javascript" src="js/modules/modal.js" defer></script>
-    <script type="text/javascript" src="js/modules/tareas.js" defer></script>
-    <script type="text/javascript" src="js/modules/alternadores.js" defer></script>
-    <script type="text/javascript" src="js/app.js" defer></script>
-    <link rel="stylesheet" href="css/basicos.css">
-    <link rel="stylesheet" href="css/formulario.css">
-    <link rel="stylesheet" href="css/app.css">
-    <title>Taskly</title>
-
-  </head>
-  <body>
-    <header>
-      <div class="opciones-flotantes">
-        <button class="alternador" id="alternar-opciones" title="Alternar opciones">
-          <i class="fi-xnslxl-chevron-solid"></i>
-        </button>
-        <div class="opciones">
-          <button class="alternador" id="alternar-texto" title="Alternar tamaño de texto" type="button"><i class="fi-cnluxl-extra-large"></i>Tamaño de texto</button>
-          <button class="alternador" id="alternar-colores" title="Alternar colores de contraste" type="button">
-            <i class="fi-xnsuxl-bulb-solid"></i>Alternar contraste</button>
-          <button id="agregar-tarea" class="tarea-placeholder alternador" title="Agregar tarea nueva">
-            <i class="fi-xwsuxl-plus-solid"></i> Agregar tarea
-          </button>
-        </div>
-      </div>
-      <h1>Taskly</h1>
-      <p id="pendientes"><!--Tenés <em></em>,  esto es para poner cuantas tareas pendientes hay en un día, primero faltan los date pickers accesibles. --><span id="nombre-usuario" class="campo-editable">tu nombre podría estar acá :(</span>.<i class="fi-xnsuxl-pen-solid"></i></p>
-    </header>
-    <main>
-      <section>
-        <h1>Tareas <span id="contador-tareas"></span></h1>
-        <div class="grilla-tareas">
-
-          <!--
-            Selector de fecha accesible
-            https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html
-
-            <time datetime="2020-07-11 20:00">Mañana a las 20hs. <i class="fas fa-pen"></i></time>
-
-            <button class="exito" type="button">
-              <i class="fas fa-check"></i> Marcar como completa.
-            </button>
-          </div>
-          -->
-      </section>
-
-    </main>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Taskly</title>
+</head>
+<body>
+  <script type="text/javascript" src="Tarea.js"></script>
+  <script type="text/javascript" src="Utils.js"></script>
+</body>
 </html>
