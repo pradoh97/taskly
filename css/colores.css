@@ -1,7 +1,8 @@
 body{
   /* contraste */
-  --color-contraste: rgb(211, 218, 227);
-  --color-contraste-light: rgb(124, 129, 140);
+  --color-contraste: rgb(255, 255, 255);
+  --color-contraste-dark: rgb(211, 218, 227);
+  --color-contraste-darker: rgb(124, 129, 140);
   /* enfasis */
   --color-enfasis: rgb(82, 148, 226);
   /* base */

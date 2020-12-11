@@ -1,0 +1,46 @@
+.tarea{
+  border: 1px solid var(--color-contraste);
+  border-radius: var(--radio-bordes);
+  padding: 1em 1em 2em;
+  background-color: var(--color-base);
+  overflow: hidden;
+  position: relative;
+}
+.tarea--activa{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  min-width: 75%;
+  width: max-content;
+  max-height: 75%;
+  height: max-content;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+.tarea--arrastrando{
+  cursor: grabbing;
+  opacity: 0.5;
+}
+.tarea__titulo{
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+.tarea__descripcion{
+ margin: 0;
+ text-align: justify;
+ margin-bottom: 0.2em;
+ /* Sin este margen, por algún motivo, el borde inferior desaparece cuando la tarea esta en edición. */
+}
+.tarea:hover .tarea__opciones{
+  opacity: 1;
+}
+.tarea__opciones{
+  opacity: 0;
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

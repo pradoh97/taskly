@@ -9,7 +9,7 @@ body{
   font-family: 'Source Sans Pro', sans-serif;
   background-color: var(--color-base);
   color: var(--color-contraste);
-  --radio-bordes: 0.075em;
+  --radio-bordes: 0.2em;
 }
 button{
   font-size: 1em;
@@ -19,11 +19,61 @@ button{
   cursor: pointer;
   box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
   border-radius: var(--radio-bordes);
+  padding: 0.25em 0.5em;
 }
 button:hover{
   background-color: var(--color-base-lighter);
 }
+button:focus{
+  box-shadow: 0 0 0em 0.15em var(--color-enfasis);
+  outline: none;
+}
 
 header{
   background-color: var(--color-base-dark);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+header h1{
+  margin: 0;
+}
+header span{
+  font-size: 1.5em;
+}
+
+.campo-editable{
+  cursor: pointer;
+}
+.campo-editable i{
+  visibility: 0;
+}
+.campo-editable:hover i{
+  opacity: 1;
+}
+
+.oculto{
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tablero{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14em, 1fr));
+  gap: 1.5em 1em;
+}
+
+.backdrop{
+  position: relative;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+header, .tablero{
+  padding: 2em 1em 1em;
 }
