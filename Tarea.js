@@ -33,8 +33,8 @@ class Tarea {
 
     //Hasta ahora no tiene ninguna clase de formato.
     html.innerHTML = `
-    La tarea ${this.titulo}: ${this.descripcion}, está ${this.completa ? "completa" : "incompleta"}.
-      `;
+      La tarea ${this.titulo}: ${this.descripcion}, está ${this.completa ? "completa" : "incompleta"}.
+    `;
 
     //Se añade el atributo data-id-tarea=n (n es el idNunmerico).
     html.dataset['idTarea'] = this.id;
