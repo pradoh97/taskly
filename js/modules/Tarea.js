@@ -1,9 +1,10 @@
 class Tarea {
-  constructor(id, titulo, descripcion, completa) {
+  constructor(id, titulo, descripcion, completa, tablero) {
     this.id = id;
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.completa = completa;
+    this.tablero = tablero
   }
 
   //Elimina una tarea de localStorage y del DOM
@@ -30,17 +31,29 @@ class Tarea {
 
     //Es el elemento que se va a agregar/actualizar en el DOM.
     let html = document.createElement('div');
+    html.classList.add('tarea');
+    html.dataset.tarea = this.id;
 
     //Hasta ahora no tiene ninguna clase de formato.
     html.innerHTML = `
-      La tarea ${this.titulo}: ${this.descripcion}, está ${this.completa ? "completa" : "incompleta"}.
+      <h2 contenteditable="true" class="tarea__titulo">${this.titulo}</h2>
+      <p contenteditable="true" class="tarea__descripcion">${this.descripcion}</p>
     `;
+    for(let opcion in opciones){
+      //html.innerHTML += `${opcion}`;
+    }
 
     //Se añade el atributo data-id-tarea=n (n es el idNunmerico).
     html.dataset['idTarea'] = this.id;
 
+    //Si el tablero no fué seleccionado, se crea por defecto en el tablero principal.
+    if(!Object.keys(this.tablero).length) this.tablero = tableroPorDefecto;
+
+    //Si el tablero viene de localStorage, solo se guarda el id.
+    if(typeof this.tablero == 'string') this.tablero = document.getElementById(this.tablero);
+
     //Si la tarea no existe en el DOM (porque el método está siendo ejecutado con la intención de crear una tarea nueva) entonces se la agrega.
-    if(!tareaDOM) document.body.appendChild(html);
+    if(!tareaDOM) this.tablero.appendChild(html);
 
     //Sino, se actualiza el contenido del elemento.
     else tareaDOM.innerHTML = html.innerHTML;
@@ -62,6 +75,9 @@ class Tarea {
       //valor es el valor de la tarea en localStorage.
       valor = Utils.filtrarClavesObjeto(this, filtro, clavesParaEliminar);
     */
+
+    //Se guarda el id del tablero
+    this.tablero = this.tablero.id;
 
     //Se crea/modifica una entrada en localStorage que tiene como clave el id de la tarea y como valor el resto de las claves del objeto tarea.
     localStorage.setItem("tarea-" + this.id, JSON.stringify(this));
