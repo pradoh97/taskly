@@ -1,0 +1,29 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400;1,600&display=swap');*/
+
+:root{
+  font-size: calc(0.9em + 0.6vmax);
+}
+body{
+  margin: 0;
+  font-size: 1em;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: var(--color-base);
+  color: var(--color-contraste);
+  --radio-bordes: 0.075em;
+}
+button{
+  font-size: 1em;
+  color: inherit;
+  background-color: var(--color-base-light);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+  border-radius: var(--radio-bordes);
+}
+button:hover{
+  background-color: var(--color-base-lighter);
+}
+
+header{
+  background-color: var(--color-base-dark);
+}
