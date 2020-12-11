@@ -48,7 +48,7 @@ header span{
   cursor: pointer;
 }
 .campo-editable i{
-  visibility: 0;
+  opacity: 0;
 }
 .campo-editable:hover i{
   opacity: 1;
@@ -75,5 +75,5 @@ header span{
 }
 
 header, .tablero{
-  padding: 2em 1em 1em;
+  padding: 2em 10% 1em;
 }
