@@ -1,12 +1,16 @@
 .tarea{
-  border: 1px solid var(--color-contraste);
+  border: 1px solid var(--color-contraste-darker);
   border-radius: var(--radio-bordes);
-  padding: 1em 1em 2em;
+  padding: 1em 1em 0;
   background-color: var(--color-base);
+  color: var(--color-contraste);
   overflow: hidden;
   position: relative;
+  max-height: 75vh;
+  overflow-y: auto;
 }
 .tarea--activa{
+  border-color: var(--color-contraste);
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
@@ -14,10 +18,7 @@
   right: 0;
   min-width: 75%;
   width: max-content;
-  max-height: 75%;
-  height: max-content;
   margin: 0 auto;
-  overflow-y: auto;
 }
 .tarea--arrastrando{
   cursor: grabbing;
@@ -30,17 +31,35 @@
 .tarea__descripcion{
  margin: 0;
  text-align: justify;
- margin-bottom: 0.2em;
- /* Sin este margen, por algún motivo, el borde inferior desaparece cuando la tarea esta en edición. */
+ margin-bottom: 1em;
 }
 .tarea:hover .tarea__opciones{
   opacity: 1;
 }
 .tarea__opciones{
   opacity: 0;
-  transition-duration: 0.3s;
-  transition-property: opacity;
-  position: absolute;
+  position: sticky;
   bottom: 10px;
-  right: 10px;
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  gap: 0.5em;
+}
+
+.tarea--completa{
+  color: var(--color-contraste-darker);
+}
+
+.tarea--completa .tarea__titulo, .tarea--completa .tarea__descripcion{
+  text-decoration: line-through;
+}
+
+.tarea__titulo, .tarea__descripcion{
+  color: inherit;
+}
+
+.tarea__opciones{
+  color: var(--color-contraste);
 }
