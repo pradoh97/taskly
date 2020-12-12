@@ -43,4 +43,18 @@ class Utils {
     return valoresFiltrados;
   }
 
+  static eventoTarea(e){
+    let tarea;
+    tarea = Tarea.obtenerTarea(null, e.target);
+
+    switch (e.target.dataset.accion) {
+      case "completar":
+        tarea.LS.alternarEstado()
+        break;
+      case "eliminar":
+        tarea.LS.eliminar();
+        break;
+    }
+  }
+
 }
