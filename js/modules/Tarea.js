@@ -1,11 +1,3 @@
-/*
-  TODO: crear método cambiarTitulo, cambiarDescripcion, guardarEnLocalStorage
-  y obtenerDeLocalStorage. Los dos primeros modifican el atributo correspondiente
-  del objeto, ademas, se van a apoyar en los dos últimos (que quizas sea buena
-  idea tenerlos en Utils) que traen los datos de la tarea y la actualizan en LS.
-  Y por último, estos dos primeros métodos, van a modificar el contenido del nodo
-  en el DOM.
-*/
 class Tarea {
   constructor(id, titulo, descripcion, completa = false, tablero = tableroPorDefecto) {
     this.id = id;
@@ -19,29 +11,37 @@ class Tarea {
   eliminar(){
 
     //Obtiene la tarea en el DOM.
-    let tareaDOM = Tarea.obtenerTarea(Tarea.extraerIDNumerico(this.id)).DOM;
+    let tareaDOM = Tarea.obtenerTarea(this.id).DOM;
 
     //Si existe, la borra.
     if(tareaDOM) tareaDOM.parentElement.removeChild(tareaDOM);
 
     //Borra de localStorage (si no existe no hace nada).
-    localStorage.removeItem('tarea-' + this.id);
+    Utils.eliminarDeLocalStorage(this.id, true);
   }
 
-  //Carga/actualiza la tarea en local storage y en el DOM
+  /*
+  TODO: crear método cambiarTitulo, cambiarDescripcion Los dos primeros modifican el atributo correspondiente
+  del objeto, ademas, se van a apoyar en los dos últimos (que quizas sea buena
+  idea tenerlos en Utils) que traen los datos de la tarea y la actualizan en LS.
+  Y por último, estos dos primeros métodos, van a modificar el contenido del nodo
+  en el DOM.
+*/
+  cambiarTitulo(titulo){
+    let tituloDOM = Tarea.obtenerTarea(this.id).DOM;
+    tituloDOM = tituloDOM.querySelector('.tarea__titulo');
+    tituloDOM.innerText = titulo;
+
+    this.titulo = titulo;
+
+    Utils.guardarEnLocalStorage(this.id, 'titulo', titulo, true);
+  }
+  //Carga la tarea en local storage y en el DOM
   cargar(){
-    //valor es el valor de la tarea en localStorage.
-    let valor = {};
-
-    //Es la tarea en el DOM
-    let tareaDOM = Tarea.obtenerTarea(this.id).DOM;
-
-    //Es el elemento que se va a agregar/actualizar en el DOM.
+    //Es el elemento que se va a agregar en el DOM.
     let html = document.createElement('div');
     html.classList.add('tarea');
-
     if(this.completa) html.classList.add('tarea--completa');
-    else html.classList.remove('tarea--completa');
 
     html.innerHTML = `
       <h2 contenteditable="true" class="tarea__titulo">${this.titulo}</h2>
@@ -83,18 +83,10 @@ class Tarea {
     //Se añade el atributo data-id-tarea=n (n es el idNunmerico).
     html.dataset['idTarea'] = this.id;
 
-    //Si el tablero no fué seleccionado, se crea por defecto en el tablero principal.
-    if(!Object.keys(this.tablero).length) this.tablero = tableroPorDefecto;
-
     //Si el tablero viene de localStorage, solo se guarda el id.
     if(typeof this.tablero == 'string') this.tablero = document.getElementById(this.tablero);
 
-    //Si la tarea ya existe, la elimino del tablero.
-    if(tareaDOM) this.tablero.removeChild(tareaDOM);
-
-    //Y agrego la nueva
     this.tablero.appendChild(html);
-
     /* Todo esto era para el método Utils.filtrarClavesObjeto pero ya no se usa. Los ID's van también al valor de cada clave de localStorage.
 
       //La tarea en localStorage no lleva como valor el ID, ya que este se usa para identificarla de entre el resto (mediante la key de localStorage). Así que esa clave no tiene que ser publicada.
@@ -123,7 +115,10 @@ class Tarea {
   //Alterna el estado de una tarea en localStorage, memoria y en el DOM.
   alternarEstado(){
     this.completa = !this.completa;
-    this.cargar();
+    Utils.guardarEnLocalStorage(this.id, 'completa', this.completa, true);
+
+    let tareaDOM = Tarea.obtenerTarea(this.id).DOM;
+    tareaDOM.classList.toggle('tarea--completa');
   }
 
   //Las tareas se guardan con la clave 'tarea-n' siendo n el número de tarea. Esto es tanto para el DOM como para localStorage y en memoria, así que para computar el valor de la clave de una tarea nueva hace falta extraerlo del string.
@@ -214,42 +209,38 @@ class Tarea {
     tarea.DOM = document.querySelector(`[data-id-tarea="${id}"]`);
 
     //Obtengo la tarea de localStorage
-    tarea["LS"] = JSON.parse(localStorage.getItem("tarea-" + id));
+    tarea["LS"] = Utils.obtenerDeLocalStorage(id, true);
 
     //Si existe esa tarea, entonces paso todos los valores del objeto de localStorage al objeto de clase Tarea (así tiene los métodos).
-    if(tarea["LS"]) tarea["LS"] = Tarea.convertirTarea(tarea["LS"], id);
+    if(tarea["LS"]) tarea["LS"] = Tarea.convertirTarea(tarea["LS"]);
 
     return tarea;
   }
 
   //Obtiene todas las tareas de localStorage, se usa para refrescar todas las tareas o la carga inicial de la aplicación.
   static obtenerTareas(){
-    let tareas = [];
-
     //Es la función que uso para encontrar tareas y convertirlas a un objeto de clase localStorage.
-    let filtro = function (clave, LS){
-      let tarea = JSON.parse(LS[clave]);
+    let filtro = function (clave){
+      let tarea = Utils.obtenerDeLocalStorage(clave);
       tarea = Tarea.convertirTarea(tarea);
       return tarea;
     }
 
     //Obtengo todas las tareas ordenadas como objetos de la clase Tarea.
-    tareas = Utils.iterarLocalStorage(clave => clave.includes('tarea'), filtro);
-
+    let tareas = Utils.iterarLocalStorage(clave => clave.includes('tarea'), filtro);
     return tareas;
   }
 
   //Carga todas las tareas al DOM y a localStorage. Útil para cuando inicia la aplicación.
   static cargarTareas(){
     let tareas = Tarea.obtenerTareas();
-
     for(let tarea of tareas){
       tarea.cargar();
     }
   }
 
   //Convierte una tarea extraida de localStorage a un objeto de clase Tarea.
-  static convertirTarea(tareaLS, id){
+  static convertirTarea(tareaLS){
 
     let tarea = new Tarea();
 
