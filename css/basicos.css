@@ -10,22 +10,28 @@ body{
   background-color: var(--color-base);
   color: var(--color-contraste);
   --radio-bordes: 0.2em;
+  --sombra-controles: 0 0 0em 0.15em var(--color-enfasis);
 }
 button{
-  font-size: 1em;
-  color: inherit;
   background-color: var(--color-base-light);
-  border: none;
   cursor: pointer;
-  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.2);
+  color: inherit;
+}
+button, input{
+  font-size: 1em;
+  border: none;
+  box-shadow: 0 0 0.25em var(--color-base-dark);
   border-radius: var(--radio-bordes);
   padding: 0.25em 0.5em;
 }
 button:hover{
   background-color: var(--color-base-lighter);
 }
-button:focus{
-  box-shadow: 0 0 0em 0.15em var(--color-enfasis);
+button:hover, input:hover{
+  box-shadow: 0 0 0.5em var(--color-base-dark);
+}
+button:focus, input:focus{
+  box-shadow: var(--sombra-controles);
   outline: none;
 }
 
@@ -54,6 +60,15 @@ header span{
   opacity: 1;
 }
 
+.flotante--centrado{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
 .oculto{
   visibility: hidden;
   opacity: 0;
@@ -66,12 +81,12 @@ header span{
 }
 
 .backdrop{
-  position: relative;
+  position: fixed;
   top:0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 header, .tablero{
