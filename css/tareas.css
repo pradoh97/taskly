@@ -11,14 +11,8 @@
 }
 .tarea--activa{
   border-color: var(--color-contraste);
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-  right: 0;
   min-width: 75%;
   width: max-content;
-  margin: 0 auto;
 }
 .tarea--arrastrando{
   cursor: grabbing;
@@ -33,6 +27,13 @@
  text-align: justify;
  margin-bottom: 1em;
 }
+.tarea__titulo, .tarea__descripcion{
+  padding: 0.1em 0;
+}
+.tarea__titulo:focus, .tarea__descripcion:focus{
+  box-shadow: var(--sombra-controles);
+  outline: none;
+}
 .tarea:hover .tarea__opciones{
   opacity: 1;
 }
@@ -46,6 +47,9 @@
   flex-flow: row nowrap;
   justify-content: flex-end;
   gap: 0.5em;
+}
+.tarea__opciones.visible{
+  opacity: 1;
 }
 
 .tarea--completa{
