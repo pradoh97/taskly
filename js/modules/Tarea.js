@@ -1,5 +1,5 @@
 class Tarea {
-  constructor(id, titulo, descripcion, completa = false, tablero = tableroPorDefecto) {
+  constructor(id = Tarea.idUltimaTarea() + 1, titulo = "Tarea nueva", descripcion = "Sin descripción", completa = false, tablero = tableroPorDefecto) {
     this.id = id;
     this.titulo = titulo;
     this.descripcion = descripcion;
@@ -20,90 +20,48 @@ class Tarea {
     Utils.eliminarDeLocalStorage(this.id, true);
   }
 
-  /*
-  TODO: crear método cambiarTitulo, cambiarDescripcion Los dos primeros modifican el atributo correspondiente
-  del objeto, ademas, se van a apoyar en los dos últimos (que quizas sea buena
-  idea tenerlos en Utils) que traen los datos de la tarea y la actualizan en LS.
-  Y por último, estos dos primeros métodos, van a modificar el contenido del nodo
-  en el DOM.
-*/
   cambiarTitulo(titulo){
-    let tituloDOM = Tarea.obtenerTarea(this.id).DOM;
-    tituloDOM = tituloDOM.querySelector('.tarea__titulo');
-    tituloDOM.innerText = titulo;
-
     this.titulo = titulo;
-
     Utils.guardarEnLocalStorage(this.id, 'titulo', titulo, true);
   }
+
+  cambiarDescripcion(descripcion){
+    this.descripcion = descripcion;
+    Utils.guardarEnLocalStorage(this.id, 'descripcion', descripcion, true);
+  }
   //Carga la tarea en local storage y en el DOM
-  cargar(){
+  cargar() {
     //Es el elemento que se va a agregar en el DOM.
     let html = document.createElement('div');
     html.classList.add('tarea');
-    if(this.completa) html.classList.add('tarea--completa');
-
+    if (this.completa) html.classList.add('tarea--completa');
     html.innerHTML = `
       <h2 contenteditable="true" class="tarea__titulo">${this.titulo}</h2>
       <p contenteditable="true" class="tarea__descripcion">${this.descripcion}</p>
     `;
 
     //Si hay opciones que agregar a la tarea (sería raro que no), las agrega.
-    if(Object.keys(opciones).length){
+    if (Object.keys(opcionesTarea).length) {
 
-      let opcionesTarea = document.createElement('div')
-      opcionesTarea.classList.add('tarea__opciones');
+      let opciones = document.createElement('div')
+      opciones.classList.add('tarea__opciones');
 
       //Agrega un botón por opción
-      for(let opcion in opciones){
-        let boton = document.createElement('button');
+      Utils.crearOpciones(opcionesTarea, opciones, 'tarea');
 
-        boton.type="button";
-
-        //Con el texto que está en el objeto del array opciones.
-        boton.innerText = opciones[opcion].texto;
-
-        //Defino la acción que realiza el botón. Esta después es útil para cuando se
-        //clickea en el botón.
-        boton.dataset.accion = opcion;
-
-        //El método eventoTarea se encarga de definir que sucede al clickear
-        //una opción de una tarea en base a qué opcion (su data-accion) disparó el evento.
-        boton.addEventListener('click', Utils.eventoTarea);
-
-        //Si hay icono, lo agrego.
-        if(opciones[opcion].icono) boton.innerText += opciones[opcion].icono;
-
-        opcionesTarea.appendChild(boton);
-      }
-
-      html.appendChild(opcionesTarea);
+      html.appendChild(opciones);
     }
 
     //Se añade el atributo data-id-tarea=n (n es el idNunmerico).
     html.dataset['idTarea'] = this.id;
 
     //Si el tablero viene de localStorage, solo se guarda el id.
-    if(typeof this.tablero == 'string') this.tablero = document.getElementById(this.tablero);
+    if (typeof this.tablero == 'string') this.tablero = document.getElementById(this.tablero);
+
+    html.querySelector('h2').addEventListener('input', Utils.eventoTarea);
+    html.querySelector('p').addEventListener('input', Utils.eventoTarea);
 
     this.tablero.appendChild(html);
-    /* Todo esto era para el método Utils.filtrarClavesObjeto pero ya no se usa. Los ID's van también al valor de cada clave de localStorage.
-
-      //La tarea en localStorage no lleva como valor el ID, ya que este se usa para identificarla de entre el resto (mediante la key de localStorage). Así que esa clave no tiene que ser publicada.
-      let clavesParaEliminar = ['id'];
-
-      //Para eso defino un filtro que en este caso define qué claves quedan en localStorage como valor y cuales no.
-      let filtro = function (clave, clavesParaEliminar){
-
-        //La intención de esta prueba aceptar todas las claves que no formen parte del array de clavesParaEliminar.
-        return !clavesParaEliminar.includes(clave);
-      }
-
-
-      Método sin uso, se guarda el id en el valor de localStorage también.
-      //valor es el valor de la tarea en localStorage.
-      valor = Utils.filtrarClavesObjeto(this, filtro, clavesParaEliminar);
-    */
 
     //Se guarda el id del tablero
     this.tablero = this.tablero.id;
@@ -193,8 +151,16 @@ class Tarea {
     if(nodo){
       let objetivo = nodo;
 
+      //Busca el padre, esto se puede hacer con recursividad.
       while(!objetivo.dataset.idTarea){
+
         objetivo = objetivo.parentElement;
+
+        //Verifica si se llegó a la raiz del documento y no se encontró una
+        //tarea (o al body en el mejor de los casos)
+        if(objetivo == document.body || objetivo == document.documentElement){
+          return null;
+        }
       }
 
       id = objetivo.dataset.idTarea;
@@ -227,8 +193,7 @@ class Tarea {
     }
 
     //Obtengo todas las tareas ordenadas como objetos de la clase Tarea.
-    let tareas = Utils.iterarLocalStorage(clave => clave.includes('tarea'), filtro);
-    return tareas;
+    return Utils.iterarLocalStorage(clave => clave.includes('tarea'), filtro);
   }
 
   //Carga todas las tareas al DOM y a localStorage. Útil para cuando inicia la aplicación.
