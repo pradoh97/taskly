@@ -95,7 +95,8 @@ class Tarea {
     //Si no hay elementos en el localStorage entonces no hay tareas.
     if(!localStorage.length) return 0;
 
-    //El id de la última tarea (el valor a retornar). Está fijado en cero por si no hay tareas en localStorage pero hay otros elementos. La primer tarea siempre debe ser 1.
+    //El id de la última tarea (el valor a retornar). Está fijado en cero por si no hay tareas en
+    //localStorage pero hay otros elementos. La primer tarea siempre debe ser 1.
     let id = 0;
 
     //Puede pasar que el usuario elimine tareas, en ese caso los id libres se van a reutilizar. idTareaAnterior es una bandera para saber si hay un salto de id's en tareas.
@@ -112,15 +113,13 @@ class Tarea {
 
     //Acá se revisa cual es el primer id libre. Si resulta que todas las claves tienen id's sucesivos (que no hay saltos) entonces el id que se retorna es el de la última tarea en cuestión, de otra forma se retorna el primero que esté libre.
     for(let clave of tareas){
-
       //Solo hace falta el número de la tarea.
       clave = Tarea.extraerIDNumerico(clave);
 
       //idTareaAnterior comienza en cero. Si este + 1 es menor a la clave actual, quiere decir que hubo un salto. Por ejemplo, si idTareaAnterior fuera 1 y la clave actual entonces no se cumple, pero si idTareaAnterior fuera 1 y la clave actual 3, entonecs si se cumplirá que 2 (idTareaAnterior + 1) es menor a 3.
       if(idTareaAnterior + 1 < clave){
-
         //En ese caso se asigna como id el id vacío (siguiendo el ejemplo anterior: 2).
-        id = idTareaAnterior + 1;
+        return parseInt(id);
       }
 
       //Si no hay salto de id, entonces se asigna el id de esta tarea como último id.

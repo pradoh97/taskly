@@ -8,6 +8,7 @@
     padding-top: 0.25em;
     border-radius: var(--radio-bordes);
     overflow: hidden;
+    z-index: 1;
 }
 .modal__encabezado{
     background-color: var(--color-base-dark);

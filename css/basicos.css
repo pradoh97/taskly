@@ -78,6 +78,7 @@ header span{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14em, 1fr));
   gap: 1.5em 1em;
+  margin-bottom: 3em;
 }
 
 .backdrop{
@@ -87,6 +88,7 @@ header span{
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 
 header, .tablero{

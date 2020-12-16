@@ -152,18 +152,16 @@ class Utils {
 
   static mostrarOpcionesTarea(e){
     if(e.target.localName.toLowerCase() == 'body' || e.target.localName.toLowerCase() == 'html'){
-      if(ultimaTareaActiva){
-        ultimaTareaActiva.querySelector('.tarea__opciones').classList.remove('visible');
-      }
+      if(ultimaTareaActiva) ultimaTareaActiva.querySelector('.tarea__opciones').classList.remove('visible');
       return;
     }
+
+    if(ultimaTareaActiva) ultimaTareaActiva.querySelector('.tarea__opciones').classList.remove('visible');
 
     let tarea = Tarea.obtenerTarea(null, e.target);
 
     if (e.keyCode == 9 || e.type == 'click') {
       if(tarea && tarea.DOM){
-        if(tarea != ultimaTareaActiva && ultimaTareaActiva) ultimaTareaActiva.querySelector('.tarea__opciones').classList.remove('visible');
-
         ultimaTareaActiva = tarea.DOM;
         ultimaTareaActiva.querySelector('.tarea__opciones').classList.add('visible');
       }
