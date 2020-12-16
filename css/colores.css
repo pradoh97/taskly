@@ -10,4 +10,6 @@ body{
   --color-base-light: rgb(66, 72, 85);
   --color-base: rgb(43, 47, 60);
   --color-base-dark: rgb(29, 32, 43);
+
+  --color-peligro: #f53939;
 }
