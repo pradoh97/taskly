@@ -46,8 +46,10 @@ header{
 header h1{
   margin: 0;
 }
-header span{
+header p{
+  margin: 0;
   font-size: 1.5em;
+  font-weight: 600;
 }
 
 .campo-editable{
@@ -67,6 +69,8 @@ header span{
   left: 0;
   right: 0;
   margin: 0 auto;
+  width: max-content;
+  max-width: 1024px;
 }
 
 .oculto{
@@ -81,7 +85,7 @@ header span{
   margin-bottom: 3em;
 }
 
-.backdrop{
+.telon{
   position: fixed;
   top:0;
   bottom: 0;
