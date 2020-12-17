@@ -55,6 +55,10 @@ header p{
 .campo-editable{
   cursor: pointer;
 }
+.campo-editable:focus{
+  box-shadow: var(--sombra-controles);
+  outline: none;
+}
 .campo-editable i{
   opacity: 0;
 }
