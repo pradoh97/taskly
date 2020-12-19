@@ -45,7 +45,10 @@ class Utils {
   o el ID y agregar el segundo atributo como true.
    */
   static obtenerDeLocalStorage(claveLS, esTarea = false){
-    return JSON.parse(localStorage.getItem(Tarea.agregarPrefijoTarea(claveLS, esTarea)));
+    let dato = localStorage.getItem(Tarea.agregarPrefijoTarea(claveLS, esTarea));
+
+    if(dato && (dato.includes('{'))) dato = JSON.parse(dato);
+    return dato;
   }
 
   /*
@@ -95,5 +98,11 @@ class Utils {
 
       elemento.appendChild(boton);
     }
+  }
+
+  //Busca recursivamente un nodo de forma reversa (viajando hacia la raiz del documento)
+  static busquedaReversaNodo(prueba,  nodoActual){
+    if(nodoActual && !prueba(nodoActual)) return this.busquedaReversaNodo(prueba, nodoActual.parentElement);
+    return nodoActual;
   }
 }
