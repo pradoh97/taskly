@@ -173,10 +173,15 @@ class Tarea {
     return this.idUltimaTarea + 1;
   }
 
+  //Busca una tarea a partir de un nodo hijo de la misma.
+  static busquedaReversaTarea(nodo){
+    return Utils.busquedaReversaNodo(nodo => nodo.dataset && nodo.dataset.idTarea, nodo)
+  }
+
   /*
   Si se la llama con un ID, trae una tarea desde localStorage y desde el DOM y
   la devuelve como objeto. La que viene de localStorage es un objeto de clase
-  Tarea (se la convierte después de obtenerla) y la que viene del DOM se guarda
+  Tarea (se la convierte des pués de obtenerla) y la que viene del DOM se guarda
   como referencia del nodo para poder editarlo/borrarlo.
 
   Si se la llama con un nodo del DOM, buscará la tarea en la que se encuentra
@@ -189,23 +194,8 @@ class Tarea {
     //Si quiero obtener la tarea porque se ejecutó el evento de algún
     //botón (por ejemplo, eliminar), entonces paso un id nulo y paso
     //El nodo del DOM que hizo la llamada
-    if(nodo){
-      let objetivo = nodo;
-
-      //Busca el padre, esto lo tengo que hacer con recursividad.
-      while(!objetivo.dataset.idTarea){
-
-        objetivo = objetivo.parentElement;
-
-        /*Verifica si se llegó a la raiz del documento y no se encontró una
-        tarea (o al body en el mejor de los casos)
-        */
-        if(objetivo == document.body || objetivo == document.documentElement){
-          return null;
-        }
-      }
-
-      id = objetivo.dataset.idTarea;
+    if(nodo && !id){
+      id = Tarea.busquedaReversaTarea(nodo).dataset.idTarea;
     }
 
     //Busco la tarea en el DOM y la guardo.
@@ -264,8 +254,8 @@ class Tarea {
 
     //En el caso de que se modifique el título o la descripción.
     if(e.type == 'input'){
-      if(e.target.localName == 'h2'.toLowerCase()) tarea.LS.cambiarTitulo(e.target.innerText);
-      if(e.target.localName == 'p'.toLowerCase()) tarea.LS.cambiarDescripcion(e.target.innerText);
+      if(e.target.localName.toLowerCase() == 'h2') tarea.LS.cambiarTitulo(e.target.innerText);
+      if(e.target.localName.toLowerCase() == 'p') tarea.LS.cambiarDescripcion(e.target.innerText);
     }
 
     //En caso de que se clickee alguna opción.
@@ -295,13 +285,11 @@ class Tarea {
   tabule fuera.
    */
   static mostrarOpcionesTarea(e){
-    //Si se clickea sobre el body o el html, entonces se ocultan las opciones.
-    if(e.target.localName.toLowerCase() == 'body' || e.target.localName.toLowerCase() == 'html'){
+    //Si no se clickeó sobre algún elemento dentro de una tarea o sobre una misma.
+    if(!Tarea.busquedaReversaTarea(e.target)){
       if(ultimaTareaActiva) ultimaTareaActiva.querySelector('.tarea__opciones').classList.remove('visible');
       return;
     }
-
-    if(ultimaTareaActiva) ultimaTareaActiva.querySelector('.tarea__opciones').classList.remove('visible');
 
     let tarea = Tarea.obtenerTarea(null, e.target);
 
